@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use CMPO or ModPipe, please cite the SemIIM 2026 paper below."
+title: "CMPO and ModPipe: a CMP process ontology and a validated knowledge graph pipeline"
+authors:
+  - family-names: Walpola
+    given-names: Maheshika Hansamalee
+    orcid: "https://orcid.org/0009-0002-9362-0278"
+  - family-names: Samuel
+    given-names: Sheeba
+    orcid: "https://orcid.org/0000-0002-7981-8504"
+  - family-names: Gaedke
+    given-names: Martin
+    orcid: "https://orcid.org/0000-0002-6729-2912"
+version: 2.0.1
+date-released: 2026-07-23
+preferred-citation:
+  type: conference-paper
+  title: "From Silos to Semantics: CMPO and a Validated Knowledge Graph for Chemical Mechanical Planarization Process Data"
+  authors:
+    - family-names: Walpola
+      given-names: Maheshika Hansamalee
+    - family-names: Samuel
+      given-names: Sheeba
+    - family-names: Gaedke
+      given-names: Martin
+  conference:
+    name: "4th International Workshop on Semantic Industrial Information Modelling (SemIIM 2026), co-located with ISWC 2026"
+  year: 2026
+  notes: "Submitted; citation details to be updated after publication on CEUR-WS.org."

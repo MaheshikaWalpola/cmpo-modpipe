@@ -1,0 +1,67 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+##################################################################
+# ModPipe validation gate — TIER 2 (SPARQL-based semantic rules).
+# Used TOGETHER with shapes_core.ttl. These rules need graph-wide
+# context that node-local core constraints cannot express:
+#  R1 physically dimensioned quantities are non-negative
+#  R2 the observed property must be declared in CMPO
+#  R3 wafer identifiers are unique (identity integrity)
+# Validation runs over the union of data + ontology so that
+# rdfs:subClassOf* paths resolve.
+##################################################################
+
+cmpo:NonNegativeQuantityShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:CMPObservation ;
+    sh:sparql [
+        sh:message "Negative value for a physically non-negative quantity (pressure, rotation, flow, usage, removal rate)." ;
+        sh:select """
+            PREFIX cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#>
+            PREFIX sosa: <http://www.w3.org/ns/sosa/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT $this WHERE {
+                $this sosa:observedProperty ?p ;
+                      sosa:hasSimpleResult ?v .
+                ?p rdfs:subClassOf* ?root .
+                VALUES ?root { cmpo:Pressure cmpo:Velocity cmpo:SlurryFlowRate
+                               cmpo:UsageParameter cmpo:MaterialRemovalRate }
+                FILTER (?v < 0)
+            }
+        """ ;
+    ] .
+
+cmpo:DeclaredPropertyShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:CMPObservation ;
+    sh:sparql [
+        sh:message "Observed property is not declared in the CMPO parameter hierarchy." ;
+        sh:select """
+            PREFIX cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#>
+            PREFIX sosa: <http://www.w3.org/ns/sosa/>
+            PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+            SELECT $this WHERE {
+                $this sosa:observedProperty ?p .
+                FILTER NOT EXISTS { ?p rdfs:subClassOf* cmpo:CMPParameter }
+            }
+        """ ;
+    ] .
+
+cmpo:UniqueWaferIdShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Wafer ;
+    sh:sparql [
+        sh:message "Two distinct wafer nodes share the same wafer identifier." ;
+        sh:select """
+            PREFIX cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#>
+            SELECT $this WHERE {
+                $this cmpo:hasWaferId ?id .
+                ?other cmpo:hasWaferId ?id .
+                FILTER (?other != $this)
+            }
+        """ ;
+    ] .

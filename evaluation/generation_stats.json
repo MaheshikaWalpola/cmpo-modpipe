@@ -1,0 +1,11 @@
+{
+  "rows": 1326,
+  "observations": 25198,
+  "cells_skipped_missing": 0,
+  "rr_rows_total_file": 424,
+  "rr_rows": 4,
+  "synthetic_entity_triples": 243,
+  "synthetic_observations": 80,
+  "triples": 252873,
+  "runtime_s": 16.5
+}

@@ -1,0 +1,75 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+##################################################################
+# ModPipe validation gate — TIER 1 (core, node-local constraints).
+# Completeness, datatype, and node-kind rules for the SOSA pattern
+# of CMPO v2.0.1. Written against the mapping specification, before
+# the seeded-error experiment was run.
+##################################################################
+
+cmpo:CMPObservationShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:CMPObservation ;
+    sh:property [
+        sh:path sosa:hasSimpleResult ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:float ;
+        sh:message "Every observation carries exactly one float result." ;
+    ] ;
+    sh:property [
+        sh:path sosa:observedProperty ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:nodeKind sh:IRI ;
+        sh:message "Every observation observes exactly one property (an IRI)." ;
+    ] ;
+    sh:property [
+        sh:path sosa:hasFeatureOfInterest ;
+        sh:minCount 1 ;
+        sh:nodeKind sh:IRI ;
+        sh:message "Every observation has a feature of interest." ;
+    ] .
+
+cmpo:WaferShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Wafer ;
+    sh:property [
+        sh:path cmpo:hasWaferId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Every wafer has exactly one identifier." ;
+    ] .
+
+cmpo:PolishingStepShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:PolishingStep ;
+    sh:property [
+        sh:path cmpo:stageLabel ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Every polishing step carries its stage label." ;
+    ] .
+
+cmpo:ToolShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Tool ;
+    sh:property [
+        sh:path cmpo:toolId ;
+        sh:minCount 1 ;
+        sh:message "Every tool has an identifier." ;
+    ] .
+
+cmpo:ChamberShape
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Chamber ;
+    sh:property [
+        sh:path cmpo:chamberNumber ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Every chamber has an integer number." ;
+    ] .

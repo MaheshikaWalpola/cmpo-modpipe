@@ -1,0 +1,131 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix cmpo:  <https://tucid/cpmo/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+#################################################################
+# CMPO shapes v2 — revised after the conformance audit.
+# Changes w.r.t. v1 (cmpo_shapes.ttl):
+#  - property paths aligned with the deployed instance vocabulary
+#    (hasNumericValue instead of rdf:value, which no instance uses)
+#  - shapes added for the classes that actually carry the data
+#    (Parameter measurements and Measurement runs)
+#  - non-negativity constraints for physically dimensioned
+#    quantities (pressure, rotation, flow, usage counters)
+#  - controlled unit vocabulary check on hasUnit
+#  - IRI node-kind check on executedOn (catches literal objects)
+# Validation is run after RDFS subclass materialisation, since
+# sh:targetClass does not see subclass instances otherwise.
+#################################################################
+
+### Every parameter measurement must carry a numeric value,
+### a unit, and a link to the run it measures.
+cmpo:ParameterShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Parameter ;
+    sh:property [
+        sh:path cmpo:hasNumericValue ;
+        sh:minCount 1 ;
+        sh:datatype xsd:float ;
+        sh:message "A Parameter must have exactly one numeric value of type xsd:float." ;
+    ] ;
+    sh:property [
+        sh:path cmpo:hasUnit ;
+        sh:minCount 1 ;
+        sh:message "A Parameter must declare its unit." ;
+    ] ;
+    sh:property [
+        sh:path cmpo:isMeasurementOf ;
+        sh:minCount 1 ;
+        sh:nodeKind sh:IRI ;
+        sh:message "A Parameter must be linked to the run it measures." ;
+    ] .
+
+### Pressures are non-negative (physical constraint).
+cmpo:PressureShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Pressure ;
+    sh:property [
+        sh:path cmpo:hasNumericValue ;
+        sh:datatype xsd:float ;
+        sh:minInclusive 0.0 ;
+        sh:message "A pressure value cannot be negative." ;
+    ] .
+
+### Rotation speeds are non-negative (physical constraint).
+cmpo:RotationShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Rotation ;
+    sh:property [
+        sh:path cmpo:hasNumericValue ;
+        sh:datatype xsd:float ;
+        sh:minInclusive 0.0 ;
+        sh:message "A rotation speed cannot be negative." ;
+    ] .
+
+### Slurry flows are non-negative (physical constraint).
+cmpo:SlurryFlowShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:SlurryFlow ;
+    sh:property [
+        sh:path cmpo:hasNumericValue ;
+        sh:datatype xsd:float ;
+        sh:minInclusive 0.0 ;
+        sh:message "A slurry flow value cannot be negative." ;
+    ] .
+
+### Usage counters (consumable wear) are non-negative.
+cmpo:UsageShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Usage ;
+    sh:property [
+        sh:path cmpo:hasNumericValue ;
+        sh:datatype xsd:float ;
+        sh:minInclusive 0.0 ;
+        sh:message "A usage counter cannot be negative." ;
+    ] .
+
+### Units come from the controlled vocabulary emitted by the ingestion
+### pipeline (the 19 unit labels of the generator's unit map).
+cmpo:UnitVocabularyShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Parameter ;
+    sh:property [
+        sh:path cmpo:hasUnit ;
+        sh:in ( "nm/min"^^xsd:string "psi"^^xsd:string "kPa"^^xsd:string "status"^^xsd:string "rpm"^^xsd:string "m/s"^^xsd:string "ml/min"^^xsd:string "min"^^xsd:string "nm"^^xsd:string "%"^^xsd:string "degC"^^xsd:string "N"^^xsd:string "spm"^^xsd:string "mM"^^xsd:string "count"^^xsd:string "ratio"^^xsd:string "pH"^^xsd:string "cP"^^xsd:string "mV"^^xsd:string ) ;
+        sh:message "Unit label is outside the controlled unit vocabulary." ;
+    ] .
+
+### A run must have at least one input wafer, a recipe, and
+### only IRI values for executedOn (no literals).
+cmpo:MeasurementRunShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Measurement ;
+    sh:property [
+        sh:path cmpo:hasInput ;
+        sh:minCount 1 ;
+        sh:class cmpo:Wafer ;
+        sh:message "A run must have at least one input Wafer." ;
+    ] ;
+    sh:property [
+        sh:path cmpo:usesRecipe ;
+        sh:minCount 1 ;
+        sh:message "A run must reference the Recipe it uses." ;
+    ] ;
+    sh:property [
+        sh:path cmpo:executedOn ;
+        sh:nodeKind sh:IRI ;
+        sh:message "executedOn must point to a resource, not a literal." ;
+    ] .
+
+### Wafers still need an identifier (kept from v1; the property
+### name follows the deployed vocabulary of the wafer generator).
+cmpo:WaferShapeV2
+    a sh:NodeShape ;
+    sh:targetClass cmpo:Wafer ;
+    sh:property [
+        sh:path cmpo:hasID ;
+        sh:minCount 1 ;
+        sh:message "A Wafer must have an identifier." ;
+    ] .

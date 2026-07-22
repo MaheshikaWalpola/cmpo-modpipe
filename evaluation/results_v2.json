@@ -1,0 +1,191 @@
+{
+  "E1": {
+    "kg_triples": 252873,
+    "union_triples": 254250,
+    "tier1": {
+      "conforms": false,
+      "violations": 4
+    },
+    "tier12": {
+      "violations": 4,
+      "tier2_rule_counts": {
+        "R1_negative_quantity": 0,
+        "R2_undeclared_property": 0,
+        "R3_duplicate_wafer_id": 0
+      }
+    },
+    "distinct_instantiated_classes": 93,
+    "distinct_observed_properties": 40,
+    "observations": 25278,
+    "wafers": 4
+  },
+  "E2": {
+    "T1_missing_value": {
+      "seeded": 50,
+      "tier1": 50,
+      "tier12": 50
+    },
+    "T2_datatype": {
+      "seeded": 50,
+      "tier1": 50,
+      "tier12": 50
+    },
+    "T3_negative_value": {
+      "seeded": 50,
+      "tier1": 0,
+      "tier12": 50
+    },
+    "T4_dangling_foi": {
+      "seeded": 50,
+      "tier1": 50,
+      "tier12": 50
+    },
+    "T5_plausible_swap": {
+      "seeded": 100,
+      "tier1": 0,
+      "tier12": 0
+    },
+    "T6_undeclared_property": {
+      "seeded": 50,
+      "tier1": 0,
+      "tier12": 50
+    },
+    "T7_unit_scale": {
+      "seeded": 50,
+      "tier1": 0,
+      "tier12": 0
+    },
+    "T8_duplicate_wafer": {
+      "seeded": 4,
+      "tier1": 0,
+      "tier12": 4
+    }
+  },
+  "E3": [
+    {
+      "id": "CQ1",
+      "q": "Which process parameters were recorded for a given wafer?",
+      "prov": "PHM16 documentation",
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "20"
+      ]
+    },
+    {
+      "id": "CQ2",
+      "q": "What was the average removal rate of a wafer per polishing step?",
+      "prov": "PHM16 target variable",
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan",
+        "153.261"
+      ]
+    },
+    {
+      "id": "CQ3",
+      "q": "Which carrier-head pressure zones are modeled, with which canonical unit?",
+      "prov": "Multi-zone head pressure (Luo & Dornfeld 2004)",
+      "rows": 8,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Downfo",
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Newton"
+      ]
+    },
+    {
+      "id": "CQ4",
+      "q": "What conditioning-related usage counters accompany observations of a wafer?",
+      "prov": "Pad conditioning literature",
+      "rows": 5,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Dresse"
+      ]
+    },
+    {
+      "id": "CQ5",
+      "q": "On which tools and chambers were observations made?",
+      "prov": "PHM16 dataset fields",
+      "rows": 12,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan"
+      ]
+    },
+    {
+      "id": "CQ6",
+      "q": "How many observations share the polishing step of a given wafer and stage?",
+      "prov": "Run-to-run comparability (Winkler et al. 2025)",
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "11979"
+      ]
+    },
+    {
+      "id": "CQ7",
+      "q": "For which wafers is a removal-rate observation missing?",
+      "prov": "Completeness probe; PHM16 has unlabeled runs",
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "0"
+      ]
+    },
+    {
+      "id": "CQ8",
+      "q": "Which slurry chemistry parameters are represented, and which have data?",
+      "prov": "Slurry chemistry as MRR driver",
+      "rows": 8,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Slurry",
+        "0"
+      ]
+    },
+    {
+      "id": "CQ9",
+      "q": "What is the timestamp range of the recorded observations?",
+      "prov": "Traceability",
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "481638013.333",
+        "481671691.0"
+      ]
+    },
+    {
+      "id": "CQ10",
+      "q": "Which lots exist and which wafers belong to them?",
+      "prov": "Fab traceability practice",
+      "rows": 2,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan",
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan"
+      ]
+    },
+    {
+      "id": "CQ11",
+      "q": "Which contact pressure values were derived for the Preston model?",
+      "prov": "Preston equation P-term (synthetic completion)",
+      "rows": 4,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan",
+        "4.032"
+      ]
+    },
+    {
+      "id": "CQ12",
+      "q": "Which pad or conditioning entities are described, with which properties?",
+      "prov": "Consumable state (conditioning literature)",
+      "rows": 0,
+      "answered": false,
+      "sample": []
+    }
+  ],
+  "runtime_s": 78.8
+}

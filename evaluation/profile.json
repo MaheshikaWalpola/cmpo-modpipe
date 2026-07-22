@@ -1,0 +1,78 @@
+{
+  "CMP-test-000.csv": {
+    "rows": 1326,
+    "columns": [
+      "MACHINE_ID",
+      "MACHINE_DATA",
+      "TIMESTAMP",
+      "WAFER_ID",
+      "STAGE",
+      "CHAMBER",
+      "USAGE_OF_BACKING_FILM",
+      "USAGE_OF_DRESSER",
+      "USAGE_OF_POLISHING_TABLE",
+      "USAGE_OF_DRESSER_TABLE",
+      "PRESSURIZED_CHAMBER_PRESSURE",
+      "MAIN_OUTER_AIR_BAG_PRESSURE",
+      "CENTER_AIR_BAG_PRESSURE",
+      "RETAINER_RING_PRESSURE",
+      "RIPPLE_AIR_BAG_PRESSURE",
+      "USAGE_OF_MEMBRANE",
+      "USAGE_OF_PRESSURIZED_SHEET",
+      "SLURRY_FLOW_LINE_A",
+      "SLURRY_FLOW_LINE_B",
+      "SLURRY_FLOW_LINE_C",
+      "WAFER_ROTATION",
+      "STAGE_ROTATION",
+      "HEAD_ROTATION",
+      "DRESSING_WATER_STATUS",
+      "EDGE_AIR_BAG_PRESSURE"
+    ],
+    "n_columns": 25,
+    "dtypes": {
+      "MACHINE_ID": "int64",
+      "MACHINE_DATA": "int64",
+      "TIMESTAMP": "float64",
+      "WAFER_ID": "int64",
+      "STAGE": "str",
+      "CHAMBER": "float64",
+      "USAGE_OF_BACKING_FILM": "float64",
+      "USAGE_OF_DRESSER": "float64",
+      "USAGE_OF_POLISHING_TABLE": "float64",
+      "USAGE_OF_DRESSER_TABLE": "float64",
+      "PRESSURIZED_CHAMBER_PRESSURE": "float64",
+      "MAIN_OUTER_AIR_BAG_PRESSURE": "float64",
+      "CENTER_AIR_BAG_PRESSURE": "float64",
+      "RETAINER_RING_PRESSURE": "float64",
+      "RIPPLE_AIR_BAG_PRESSURE": "float64",
+      "USAGE_OF_MEMBRANE": "float64",
+      "USAGE_OF_PRESSURIZED_SHEET": "float64",
+      "SLURRY_FLOW_LINE_A": "float64",
+      "SLURRY_FLOW_LINE_B": "float64",
+      "SLURRY_FLOW_LINE_C": "float64",
+      "WAFER_ROTATION": "float64",
+      "STAGE_ROTATION": "float64",
+      "HEAD_ROTATION": "float64",
+      "DRESSING_WATER_STATUS": "float64",
+      "EDGE_AIR_BAG_PRESSURE": "float64"
+    },
+    "missing_cells": 0,
+    "distinct_wafers": 4
+  },
+  "CMP-test-removalrate.csv": {
+    "rows": 424,
+    "columns": [
+      "WAFER_ID",
+      "STAGE",
+      "AVG_REMOVAL_RATE"
+    ],
+    "n_columns": 3,
+    "dtypes": {
+      "WAFER_ID": "int64",
+      "STAGE": "str",
+      "AVG_REMOVAL_RATE": "float64"
+    },
+    "missing_cells": 0,
+    "distinct_wafers": 415
+  }
+}

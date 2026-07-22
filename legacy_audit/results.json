@@ -1,0 +1,441 @@
+{
+  "E1": {
+    "graph_stats": {
+      "schema_triples": 1421,
+      "instance_triples": 601742,
+      "typed_instances": 74350,
+      "runs": 1326
+    },
+    "v1_asserted": {
+      "conforms": false,
+      "violations": 42,
+      "by_constraint": {
+        "MinCountConstraintComponent|cmpo:hasLot": 11,
+        "MinCountConstraintComponent|cmpo:usesParameter": 4,
+        "MinCountConstraintComponent|cmpo:hasID": 11,
+        "MinCountConstraintComponent|[ sh:inversePath cmpo:hasLot ]": 1,
+        "MinCountConstraintComponent|cmpo:hasPadLifetime": 4,
+        "MinCountConstraintComponent|cmpo:hasMaterial": 11
+      }
+    },
+    "v1_materialised": {
+      "conforms": false,
+      "violations": 42,
+      "by_constraint": {
+        "MinCountConstraintComponent|cmpo:hasLot": 11,
+        "MinCountConstraintComponent|cmpo:usesParameter": 4,
+        "MinCountConstraintComponent|cmpo:hasID": 11,
+        "MinCountConstraintComponent|[ sh:inversePath cmpo:hasLot ]": 1,
+        "MinCountConstraintComponent|cmpo:hasPadLifetime": 4,
+        "MinCountConstraintComponent|cmpo:hasMaterial": 11
+      }
+    },
+    "v2_materialised": {
+      "conforms": false,
+      "violations": 21227,
+      "by_constraint": {
+        "MinCountConstraintComponent|cmpo:hasNumericValue": 2652,
+        "MinCountConstraintComponent|cmpo:hasUnit": 17238,
+        "MinCountConstraintComponent|cmpo:hasID": 11,
+        "NodeKindConstraintComponent|cmpo:executedOn": 1326
+      }
+    },
+    "targets_with_zero_asserted_instances": {
+      "v1": [
+        "https://tucid/cpmo/CMPProcess",
+        "https://tucid/cpmo/CMPTool",
+        "https://tucid/cpmo/PlatenSpeed",
+        "https://tucid/cpmo/Pressure",
+        "https://tucid/cpmo/Slurry"
+      ],
+      "v2": [
+        "https://tucid/cpmo/Pressure",
+        "https://tucid/cpmo/Rotation",
+        "https://tucid/cpmo/SlurryFlow",
+        "https://tucid/cpmo/Usage"
+      ]
+    },
+    "rdf_value_triples_in_data": 0,
+    "wafer_nodes": 8,
+    "case_variant_wafer_duplicates": 4,
+    "literal_executedOn": 1326
+  },
+  "E2": {
+    "T1_missing_value": {
+      "seeded": 50,
+      "v1": {
+        "total_violations": 11,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      },
+      "v2": {
+        "total_violations": 3253,
+        "new_focus_nodes": 50,
+        "seeded_detected": 50
+      }
+    },
+    "T2_datatype": {
+      "seeded": 50,
+      "v1": {
+        "total_violations": 11,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      },
+      "v2": {
+        "total_violations": 3279,
+        "new_focus_nodes": 63,
+        "seeded_detected": 50
+      }
+    },
+    "T3_negative_value": {
+      "seeded": 50,
+      "v1": {
+        "total_violations": 11,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      },
+      "v2": {
+        "total_violations": 3253,
+        "new_focus_nodes": 50,
+        "seeded_detected": 50
+      }
+    },
+    "T4_dangling_ref": {
+      "seeded": 50,
+      "v1": {
+        "total_violations": 11,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      },
+      "v2": {
+        "total_violations": 3253,
+        "new_focus_nodes": 50,
+        "seeded_detected": 50
+      }
+    },
+    "T5_plausible_swap": {
+      "seeded": 100,
+      "v1": {
+        "total_violations": 11,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      },
+      "v2": {
+        "total_violations": 3203,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      }
+    },
+    "T6_unit_label": {
+      "seeded": 50,
+      "v1": {
+        "total_violations": 11,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      },
+      "v2": {
+        "total_violations": 3248,
+        "new_focus_nodes": 50,
+        "seeded_detected": 50
+      }
+    },
+    "T7_unit_scale": {
+      "seeded": 50,
+      "v1": {
+        "total_violations": 11,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      },
+      "v2": {
+        "total_violations": 3203,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      }
+    },
+    "T8_duplicate_wafer": {
+      "seeded": 3,
+      "v1": {
+        "total_violations": 17,
+        "new_focus_nodes": 6,
+        "seeded_detected": 3
+      },
+      "v2": {
+        "total_violations": 3203,
+        "new_focus_nodes": 0,
+        "seeded_detected": 0
+      }
+    }
+  },
+  "E3": [
+    {
+      "id": "CQ1",
+      "question": "Which process parameters were recorded for a given polishing run?",
+      "provenance": "PHM16 dataset documentation (per-run sensor channels)",
+      "executes": true,
+      "rows": 1,
+      "nonempty": true,
+      "sample": [
+        "55"
+      ]
+    },
+    {
+      "id": "CQ2",
+      "question": "What was the average removal rate of a given wafer at each stage?",
+      "provenance": "PHM16 challenge target variable",
+      "executes": true,
+      "rows": 5,
+      "nonempty": true,
+      "sample": [
+        "https://tucid/cpmo/instance/cmp_run_-4224160592_A_00295",
+        "56.1786"
+      ]
+    },
+    {
+      "id": "CQ3",
+      "question": "Which pressure zones of the polishing head were recorded, and with which units?",
+      "provenance": "Multi-zone head pressure control (Luo & Dornfeld 2004, ch. on wafer-scale uniformity)",
+      "executes": true,
+      "rows": 0,
+      "nonempty": false,
+      "sample": []
+    },
+    {
+      "id": "CQ4",
+      "question": "What conditioning (dresser) usage accompanied a given run?",
+      "provenance": "Pad conditioning affects removal rate (CMP conditioning literature)",
+      "executes": true,
+      "rows": 5,
+      "nonempty": true,
+      "sample": [
+        "discConditioningForce_N",
+        "76.89"
+      ]
+    },
+    {
+      "id": "CQ5",
+      "question": "Which slurry and recipe were used by each run?",
+      "provenance": "Slurry chemistry / recipe as removal-rate factors (Preston-equation extensions)",
+      "executes": true,
+      "rows": 5,
+      "nonempty": true,
+      "sample": [
+        "https://tucid/cpmo/instance/cmp_run_-887170152_B_00729",
+        "https://tucid/cpmo/instance/SLURRY_04",
+        "https://tucid/cpmo/instance/RECIPE_CMP_B_04"
+      ]
+    },
+    {
+      "id": "CQ6",
+      "question": "Which runs share the same recipe as a given run?",
+      "provenance": "Run-to-run comparability (virtual metrology setting, Winkler et al. 2025)",
+      "executes": true,
+      "rows": 1,
+      "nonempty": true,
+      "sample": [
+        "346"
+      ]
+    },
+    {
+      "id": "CQ7",
+      "question": "For which runs is the removal-rate measurement missing?",
+      "provenance": "Completeness check; PHM16 has runs without ground truth",
+      "executes": true,
+      "rows": 1,
+      "nonempty": false,
+      "sample": [
+        "0"
+      ]
+    },
+    {
+      "id": "CQ8",
+      "question": "What slurry chemistry parameters (e.g. pH) are recorded, with values?",
+      "provenance": "Slurry chemistry as MRR driver (CMP chemistry literature)",
+      "executes": true,
+      "rows": 9,
+      "nonempty": true,
+      "sample": [
+        "particleSize_nm"
+      ]
+    },
+    {
+      "id": "CQ9",
+      "question": "Which chamber was each run executed in?",
+      "provenance": "Chamber as context variable (PHM16 dataset field)",
+      "executes": true,
+      "rows": 5,
+      "nonempty": true,
+      "sample": [
+        "https://tucid/cpmo/instance/cmp_run_-887170152_B_00721",
+        "https://tucid/cpmo/instance/CHAMBER_4"
+      ]
+    },
+    {
+      "id": "CQ10",
+      "question": "Which pad and pad lifetime is associated with a run?",
+      "provenance": "Pad wear / lifetime as drift factor (conditioning literature)",
+      "executes": true,
+      "rows": 5,
+      "nonempty": true,
+      "sample": [
+        "https://tucid/cpmo/instance/PAD_03",
+        "3042.0"
+      ]
+    },
+    {
+      "id": "CQ11",
+      "question": "Which layers or materials does a given wafer carry?",
+      "provenance": "Layer/material determines CMP step type (CMP intros)",
+      "executes": true,
+      "rows": 0,
+      "nonempty": false,
+      "sample": []
+    },
+    {
+      "id": "CQ12",
+      "question": "Which wafer lots exist and which wafers belong to them?",
+      "provenance": "Lot-level traceability (fab practice)",
+      "executes": true,
+      "rows": 0,
+      "nonempty": false,
+      "sample": []
+    }
+  ],
+  "runtime_seconds": 223.8,
+  "E3_union": [
+    {
+      "id": "CQ1",
+      "question": "Which process parameters were recorded for a given polishing run?",
+      "provenance": "PHM16 dataset documentation (per-run sensor channels)",
+      "executes": true,
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "55"
+      ]
+    },
+    {
+      "id": "CQ2",
+      "question": "What was the average removal rate of a given wafer at each stage?",
+      "provenance": "PHM16 challenge target variable",
+      "executes": true,
+      "rows": 5,
+      "answered": true,
+      "sample": [
+        "https://tucid/cpmo/instance/cmp_run_-4224160592_A_00463",
+        "56.1786"
+      ]
+    },
+    {
+      "id": "CQ3",
+      "question": "Which pressure zones of the polishing head were recorded, and with which units?",
+      "provenance": "Multi-zone head pressure control (Luo & Dornfeld 2004, ch. on wafer-scale uniformity)",
+      "executes": true,
+      "rows": 8,
+      "answered": true,
+      "sample": [
+        "https://tucid/cpmo/CenterAirBagPressure",
+        "psi"
+      ]
+    },
+    {
+      "id": "CQ4",
+      "question": "What conditioning (dresser) usage accompanied a given run?",
+      "provenance": "Pad conditioning affects removal rate (CMP conditioning literature)",
+      "executes": true,
+      "rows": 5,
+      "answered": true,
+      "sample": [
+        "conditioningRatio",
+        "0.727"
+      ]
+    },
+    {
+      "id": "CQ5",
+      "question": "Which slurry and recipe were used by each run?",
+      "provenance": "Slurry chemistry / recipe as removal-rate factors (Preston-equation extensions)",
+      "executes": true,
+      "rows": 5,
+      "answered": true,
+      "sample": [
+        "https://tucid/cpmo/instance/cmp_run_-4224160678_B_00991",
+        "https://tucid/cpmo/instance/SLURRY_01",
+        "https://tucid/cpmo/instance/RECIPE_CMP_B_01"
+      ]
+    },
+    {
+      "id": "CQ6",
+      "question": "Which runs share the same recipe as a given run?",
+      "provenance": "Run-to-run comparability (virtual metrology setting, Winkler et al. 2025)",
+      "executes": true,
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "346"
+      ]
+    },
+    {
+      "id": "CQ7",
+      "question": "For which runs is the removal-rate measurement missing?",
+      "provenance": "Completeness check; PHM16 has runs without ground truth",
+      "executes": true,
+      "rows": 1,
+      "answered": true,
+      "sample": [
+        "0"
+      ]
+    },
+    {
+      "id": "CQ8",
+      "question": "What slurry chemistry parameters (e.g. pH) are recorded, with values?",
+      "provenance": "Slurry chemistry as MRR driver (CMP chemistry literature)",
+      "executes": true,
+      "rows": 9,
+      "answered": true,
+      "sample": [
+        "particleConcentration_percent"
+      ]
+    },
+    {
+      "id": "CQ9",
+      "question": "Which chamber was each run executed in?",
+      "provenance": "Chamber as context variable (PHM16 dataset field)",
+      "executes": true,
+      "rows": 5,
+      "answered": true,
+      "sample": [
+        "https://tucid/cpmo/instance/cmp_run_-4224160678_B_01326",
+        "https://tucid/cpmo/instance/CHAMBER_1"
+      ]
+    },
+    {
+      "id": "CQ10",
+      "question": "Which pad and pad lifetime is associated with a run?",
+      "provenance": "Pad wear / lifetime as drift factor (conditioning literature)",
+      "executes": true,
+      "rows": 5,
+      "answered": true,
+      "sample": [
+        "https://tucid/cpmo/instance/PAD_03",
+        "2667.0"
+      ]
+    },
+    {
+      "id": "CQ11",
+      "question": "Which layers or materials does a given wafer carry?",
+      "provenance": "Layer/material determines CMP step type (CMP intros)",
+      "executes": true,
+      "rows": 0,
+      "answered": false,
+      "sample": []
+    },
+    {
+      "id": "CQ12",
+      "question": "Which wafer lots exist and which wafers belong to them?",
+      "provenance": "Lot-level traceability (fab practice)",
+      "executes": true,
+      "rows": 0,
+      "answered": false,
+      "sample": []
+    }
+  ]
+}
