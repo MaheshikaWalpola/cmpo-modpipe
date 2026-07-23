@@ -64,11 +64,12 @@ def type_closure(g, ont):
 
 def main():
     t0 = time.time()
-    ont = Graph(); ont.parse("cmpo-v2.0.1.ttl", format="turtle")
-    kg = Graph(); kg.parse("kg_cmpo_v201.ttl", format="turtle")
+    ont = Graph(); ont.parse("cmpo-v2.0.2.ttl", format="turtle")
+    kg = Graph(); kg.parse("kg_cmpo_v202.ttl", format="turtle")
     sosa_shapes = Graph(); sosa_shapes.parse("KWG-SHACL/shacl_sosa.ttl", format="turtle")
-    # Minimal mechanical repair: the published suite wraps two sh:or lists in
-    # sh:property blank nodes that carry no sh:path, which strict validators
+    # Minimal mechanical repair: the published suite wraps four sh:or lists in
+    # sh:property blank nodes carrying no sh:path (two each in the observation
+    # and actuation node shapes), which strict validators
     # (pySHACL) reject as malformed property shapes. Hoist those sh:or lists
     # to the owning node shape; semantics unchanged.
     SH = ev.rdflib.Namespace("http://www.w3.org/ns/shacl#") if hasattr(ev, "rdflib") else None

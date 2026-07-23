@@ -14,7 +14,6 @@ Every number is computed; seed fixed for reproducibility.
 import json
 import random
 import time
-from pathlib import Path
 from collections import Counter
 
 import pandas as pd
@@ -29,10 +28,10 @@ R = {}
 
 
 def load():
-    ont = Graph(); ont.parse(str(Path(__file__).parent.parent / "ontology" / "cmpo-v2.0.1.ttl"), format="turtle")
-    kg = Graph(); kg.parse(str(Path(__file__).parent / "out" / "kg_unvalidated.ttl"), format="turtle")
-    core = Graph(); core.parse(str(Path(__file__).parent.parent / "shapes" / "shapes_core.ttl"), format="turtle")
-    both = Graph(); both.parse(str(Path(__file__).parent.parent / "shapes" / "shapes_core.ttl"), format="turtle"); both.parse(str(Path(__file__).parent.parent / "shapes" / "shapes_sparql.ttl"), format="turtle")
+    ont = Graph(); ont.parse("cmpo-v2.0.2.ttl", format="turtle")
+    kg = Graph(); kg.parse("out/kg_unvalidated.ttl", format="turtle")
+    core = Graph(); core.parse("shapes_core.ttl", format="turtle")
+    both = Graph(); both.parse("shapes_core.ttl", format="turtle"); both.parse("shapes_sparql.ttl", format="turtle")
     return ont, kg, core, both
 
 
@@ -251,7 +250,7 @@ CQS = [
         ?w cmpo:hasWaferId ?id . FILTER(str(?id)="373446766") } LIMIT 10"""),
     ("CQ5", "On which tools and chambers were observations made?",
      "PHM16 dataset fields",
-     """SELECT DISTINCT ?plat WHERE { ?o a cmpo:CMPObservation ; sosa:madeOnPlatform ?plat . } LIMIT 12"""),
+     """SELECT DISTINCT ?plat WHERE { ?o a cmpo:CMPObservation ; cmpo:madeOnPlatform ?plat . } LIMIT 12"""),
     ("CQ6", "How many observations share the polishing step of a given wafer and stage?",
      "Run-to-run comparability (Winkler et al. 2025)",
      """SELECT (COUNT(?o) AS ?n) WHERE {
@@ -315,7 +314,7 @@ def main():
     R["E2"] = experiment_2(sub, core, both)
     R["E3"] = experiment_3(kg, ont)
     R["runtime_s"] = round(time.time() - t0, 1)
-    json.dump(R, open(str(Path(__file__).parent / "out" / "results_v2.json"), "w"), indent=2, default=str)
+    json.dump(R, open("out/results_v2.json", "w"), indent=2, default=str)
     print(f"done in {R['runtime_s']}s -> out/results_v2.json")
 
 

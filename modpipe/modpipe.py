@@ -31,11 +31,11 @@ HERE = Path(__file__).parent
 OUT = HERE / "out"
 OUT.mkdir(exist_ok=True)
 
-MAPPING_CSV = str(HERE.parent / "mapping" / "csv_to_cmpo_v2.0_mapping_test_sample.csv")
-SYNTH_XLSX = str(HERE.parent / "synthetic" / "CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx")
-ONTOLOGY = str(HERE.parent / "ontology" / "cmpo-v2.0.1.ttl")
-PROCESS_CSV = str(HERE.parent / "data" / "CMP-test-000.csv")  # from the PHM 2016 Data Challenge, see README
-RR_CSV = str(HERE.parent / "data" / "CMP-test-removalrate.csv")  # from the PHM 2016 Data Challenge, see README
+MAPPING_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/csv_to_cmpo_v2.0_mapping_test_sample.csv"
+SYNTH_XLSX = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx"
+ONTOLOGY = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/cmpo-v2.0.2.ttl"
+PROCESS_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/Test CSV/PHM Daten/data/2016 PHM DATA CHALLENGE CMP DATA SET/CMP-data/test/CMP-test-000.csv"
+RR_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/Test CSV/PHM Daten/data/2016 PHM DATA CHALLENGE CMP DATA SET/CMP-test-removalrate.csv"
 
 # measurement column -> observable-property class comes from the mapping spec;
 # identifier/context columns are handled structurally per its rdf_pattern notes.
@@ -110,8 +110,8 @@ def stage34_generate(meas_map):
             g.add((obs, RDF.type, CMPO.CMPObservation))
             g.add((obs, SOSA.observedProperty, CMPO[cls_name]))
             g.add((obs, SOSA.hasFeatureOfInterest, wafer))
-            g.add((obs, SOSA.madeOnPlatform, machine))
-            g.add((obs, SOSA.madeOnPlatform, chamber))
+            g.add((obs, CMPO.madeOnPlatform, machine))
+            g.add((obs, CMPO.madeOnPlatform, chamber))
             g.add((obs, CMPO.duringStep, step))
             g.add((obs, SOSA.hasSimpleResult, Literal(float(v), datatype=XSD.float)))
             g.add((obs, CMPO.machineDataId, Literal(int(row["MACHINE_DATA"]), datatype=XSD.integer)))
@@ -178,7 +178,7 @@ def stage_synth(g):
         g.add((o, RDF.type, CMPO.CMPObservation))
         g.add((o, SOSA.observedProperty, term(r["sosa:observedProperty"])))
         g.add((o, SOSA.hasFeatureOfInterest, INST[str(r["sosa:hasFeatureOfInterest"])]))
-        link_p = SOSA.madeOnPlatform if "Platform" in str(r["platform/sensor link"]) else SOSA.madeBySensor
+        link_p = CMPO.madeOnPlatform if "Platform" in str(r["platform/sensor link"]) else SOSA.madeBySensor
         g.add((o, link_p, INST[str(r["link target"])]))
         if pd.notna(r.get("cmpo:duringStep")):
             g.add((o, CMPO.duringStep, INST[str(r["cmpo:duringStep"])]))

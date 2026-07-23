@@ -11,7 +11,7 @@ co-located with ISWC 2026).
 
 | Folder | What it holds |
 |---|---|
-| `ontology/` | CMPO v2.0.1 (Turtle, 165 classes, SOSA/SSN backbone, QUDT-aligned units, changelog in the file header) and its specification document |
+| `ontology/` | CMPO v2.0.2 (Turtle, 165 classes, SOSA/SSN backbone, QUDT-aligned units, changelog in the file header) and its specification document |
 | `mapping/` | The declarative column-to-ontology mapping specification for the PHM 2016 CMP dataset (28 rows: role, CMPO term, mechanism, datatype, canonical unit per column) |
 | `synthetic/` | The synthetic completion table (observations and entities for CMPO classes that the PHM tool does not log, with per-class coverage declaration; identifiers are visibly synthetic) |
 | `modpipe/` | The pipeline (`modpipe.py`: ingestion, alignment, normalization, RDF generation) and the evaluation harness (`evaluate_v2.py`: gate run, seeded-error study, competency questions) |

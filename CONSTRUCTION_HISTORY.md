@@ -26,9 +26,11 @@ step, rather than building everything around the CMP concept itself.
 **Stage 3 — SOSA/SSN rebuild (the released version).** The model was asked to
 rebuild the ontology on the W3C SOSA/SSN observation vocabulary. This produced
 the schema that the prototype portal used and that, after further revision,
-became CMPO v2.0.1 as released here: every recorded value is a
-sosa:Observation specialization, parameter classes sit under cmpo:CMPParameter,
-and units are individuals aligned to QUDT.
+became, after two patch releases recorded in the changelog, CMPO v2.0.2 as
+released here: every recorded value is a sosa:Observation specialization,
+parameter classes sit under cmpo:CMPParameter, units are individuals aligned
+to QUDT, and observations link to equipment through cmpo:madeOnPlatform, a
+declared CMP-specific extension of the SOSA/SSN pattern.
 
 ## Data grounding
 

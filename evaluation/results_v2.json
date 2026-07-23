@@ -1,7 +1,7 @@
 {
   "E1": {
     "kg_triples": 252873,
-    "union_triples": 254250,
+    "union_triples": 254256,
     "tier1": {
       "conforms": false,
       "violations": 4
@@ -90,8 +90,8 @@
       "rows": 8,
       "answered": true,
       "sample": [
-        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Downfo",
-        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Newton"
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Center",
+        "None"
       ]
     },
     {
@@ -101,7 +101,7 @@
       "rows": 5,
       "answered": true,
       "sample": [
-        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Dresse"
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Backin"
       ]
     },
     {
@@ -175,7 +175,7 @@
       "answered": true,
       "sample": [
         "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan",
-        "4.032"
+        "4.2"
       ]
     },
     {
@@ -187,5 +187,5 @@
       "sample": []
     }
   ],
-  "runtime_s": 78.8
+  "runtime_s": 68.8
 }
