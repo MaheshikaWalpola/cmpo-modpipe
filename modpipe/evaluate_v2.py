@@ -27,11 +27,17 @@ RNG = random.Random(42)
 R = {}
 
 
+import os as _os
+def _find(*cands):
+    for c in cands:
+        if _os.path.exists(c): return c
+    raise FileNotFoundError("none of: " + ", ".join(cands) + " -- run from the repository root")
+
 def load():
-    ont = Graph(); ont.parse("cmpo-v2.0.2.ttl", format="turtle")
-    kg = Graph(); kg.parse("out/kg_unvalidated.ttl", format="turtle")
-    core = Graph(); core.parse("shapes_core.ttl", format="turtle")
-    both = Graph(); both.parse("shapes_core.ttl", format="turtle"); both.parse("shapes_sparql.ttl", format="turtle")
+    ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
+    kg = Graph(); kg.parse(_find("out/kg_unvalidated.ttl", "kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
+    core = Graph(); core.parse(_find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle")
+    both = Graph(); both.parse(_find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle"); both.parse(_find("shapes/shapes_sparql.ttl", "shapes_sparql.ttl"), format="turtle")
     return ont, kg, core, both
 
 

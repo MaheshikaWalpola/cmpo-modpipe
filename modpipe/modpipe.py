@@ -33,7 +33,12 @@ OUT.mkdir(exist_ok=True)
 
 MAPPING_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/csv_to_cmpo_v2.0_mapping_test_sample.csv"
 SYNTH_XLSX = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx"
-ONTOLOGY = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/cmpo-v2.0.2.ttl"
+import os as _os
+def _find(*cands):
+    for c in cands:
+        if _os.path.exists(c): return c
+    raise FileNotFoundError("none of: " + ", ".join(cands) + " -- run from the repository root")
+ONTOLOGY = _find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl")
 PROCESS_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/Test CSV/PHM Daten/data/2016 PHM DATA CHALLENGE CMP DATA SET/CMP-data/test/CMP-test-000.csv"
 RR_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/Test CSV/PHM Daten/data/2016 PHM DATA CHALLENGE CMP DATA SET/CMP-test-removalrate.csv"
 

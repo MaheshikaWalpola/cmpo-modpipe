@@ -1,0 +1,44 @@
+{
+  "clean_after_fix": 4011,
+  "punned_classes_typed": 51,
+  "T1_missing_value": {
+    "seeded": 50,
+    "strict": 50,
+    "new_results": 50
+  },
+  "T2_datatype": {
+    "seeded": 50,
+    "strict": 0,
+    "new_results": 0
+  },
+  "T3_negative_value": {
+    "seeded": 50,
+    "strict": 0,
+    "new_results": 0
+  },
+  "T4_dangling_foi": {
+    "seeded": 50,
+    "strict": 0,
+    "new_results": 1
+  },
+  "T5_plausible_swap": {
+    "seeded": 100,
+    "strict": 0,
+    "new_results": 0
+  },
+  "T6_undeclared_property": {
+    "seeded": 50,
+    "strict": 50,
+    "new_results": 51
+  },
+  "T7_unit_scale": {
+    "seeded": 50,
+    "strict": 0,
+    "new_results": 0
+  },
+  "T8_duplicate_wafer": {
+    "seeded": 4,
+    "strict": 0,
+    "new_results": 0
+  }
+}

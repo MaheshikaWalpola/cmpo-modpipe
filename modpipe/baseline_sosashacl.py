@@ -22,6 +22,12 @@ ev = importlib.util.module_from_spec(spec)
 # patch load() paths not needed; we don't call ev.load()
 spec.loader.exec_module(ev)
 
+import os as _os
+def _find(*cands):
+    for c in cands:
+        if _os.path.exists(c): return c
+    raise FileNotFoundError("none of: " + ", ".join(cands))
+
 from pyshacl import validate
 from rdflib import Graph, RDF, RDFS, URIRef
 
@@ -64,9 +70,9 @@ def type_closure(g, ont):
 
 def main():
     t0 = time.time()
-    ont = Graph(); ont.parse("cmpo-v2.0.2.ttl", format="turtle")
-    kg = Graph(); kg.parse("kg_cmpo_v202.ttl", format="turtle")
-    sosa_shapes = Graph(); sosa_shapes.parse("KWG-SHACL/shacl_sosa.ttl", format="turtle")
+    ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
+    kg = Graph(); kg.parse(_find("kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
+    sosa_shapes = Graph(); sosa_shapes.parse(_find("KWG-SHACL/shacl_sosa.ttl", "shapes/shacl_sosa_external.ttl"  # git clone https://github.com/KnowWhereGraph/KWG-SHACL), format="turtle")
     # Minimal mechanical repair: the published suite wraps four sh:or lists in
     # sh:property blank nodes carrying no sh:path (two each in the observation
     # and actuation node shapes), which strict validators
@@ -88,7 +94,7 @@ def main():
                     sosa_shapes.remove((pnode, t[0], t[1]))
                 repairs += 1
     print(f"repaired {repairs} malformed pathless sh:property wrappers", flush=True)
-    core = Graph(); core.parse("shapes_core.ttl", format="turtle")
+    core = Graph(); core.parse(_find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle")
     print(f"loaded: kg={len(kg)} ont={len(ont)} sosa-shapes={len(sosa_shapes)}", flush=True)
 
     sub = ev.build_subgraph(kg, ont)          # same RNG(42) first consumption as harness
