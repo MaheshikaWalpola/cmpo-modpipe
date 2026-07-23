@@ -1,0 +1,95 @@
+{
+  "baseline_violations": {
+    "A": 8045,
+    "B": 8045
+  },
+  "T1_missing_value": {
+    "seeded": 50,
+    "sosa_A_strict": 50,
+    "sosa_A_generous": 50,
+    "sosa_A_new_results": 50,
+    "sosa_B_strict": 50,
+    "sosa_B_generous": 50,
+    "sosa_B_new_results": 50,
+    "tier1": 50,
+    "tier12": 50
+  },
+  "T2_datatype": {
+    "seeded": 50,
+    "sosa_A_strict": 0,
+    "sosa_A_generous": 0,
+    "sosa_A_new_results": 0,
+    "sosa_B_strict": 0,
+    "sosa_B_generous": 0,
+    "sosa_B_new_results": 0,
+    "tier1": 50,
+    "tier12": 50
+  },
+  "T3_negative_value": {
+    "seeded": 50,
+    "sosa_A_strict": 0,
+    "sosa_A_generous": 0,
+    "sosa_A_new_results": 0,
+    "sosa_B_strict": 0,
+    "sosa_B_generous": 0,
+    "sosa_B_new_results": 0,
+    "tier1": 0,
+    "tier12": 50
+  },
+  "T4_dangling_foi": {
+    "seeded": 50,
+    "sosa_A_strict": 0,
+    "sosa_A_generous": 0,
+    "sosa_A_new_results": 1,
+    "sosa_B_strict": 0,
+    "sosa_B_generous": 0,
+    "sosa_B_new_results": 1,
+    "tier1": 50,
+    "tier12": 50
+  },
+  "T5_plausible_swap": {
+    "seeded": 100,
+    "sosa_A_strict": 0,
+    "sosa_A_generous": 0,
+    "sosa_A_new_results": 0,
+    "sosa_B_strict": 0,
+    "sosa_B_generous": 0,
+    "sosa_B_new_results": 0,
+    "tier1": 0,
+    "tier12": 0
+  },
+  "T6_undeclared_property": {
+    "seeded": 50,
+    "sosa_A_strict": 50,
+    "sosa_A_generous": 50,
+    "sosa_A_new_results": 51,
+    "sosa_B_strict": 50,
+    "sosa_B_generous": 50,
+    "sosa_B_new_results": 51,
+    "tier1": 0,
+    "tier12": 50
+  },
+  "T7_unit_scale": {
+    "seeded": 50,
+    "sosa_A_strict": 0,
+    "sosa_A_generous": 0,
+    "sosa_A_new_results": 0,
+    "sosa_B_strict": 0,
+    "sosa_B_generous": 0,
+    "sosa_B_new_results": 0,
+    "tier1": 0,
+    "tier12": 0
+  },
+  "T8_duplicate_wafer": {
+    "seeded": 4,
+    "sosa_A_strict": 0,
+    "sosa_A_generous": 0,
+    "sosa_A_new_results": 0,
+    "sosa_B_strict": 0,
+    "sosa_B_generous": 0,
+    "sosa_B_new_results": 0,
+    "tier1": 0,
+    "tier12": 4
+  },
+  "runtime_s": 180.0
+}
