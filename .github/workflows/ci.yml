@@ -1,0 +1,30 @@
+name: harness
+on: [push, pull_request]
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      # The PHM 2016 CSVs are not redistributable, so CI does not run the
+      # generator (modpipe.py). It runs the full evaluation harness against
+      # the committed knowledge graph and checks that E1 and E2 reproduce
+      # the committed results exactly.
+      - run: python3 modpipe/evaluate_v2.py
+      - run: |
+          python3 - << 'PY'
+          import json, sys
+          fresh = json.load(open("out/results_v2.json"))
+          committed = json.load(open("evaluation/results_v2.json"))
+          for key in ("E1", "E2"):
+              if fresh[key] != committed[key]:
+                  sys.exit(f"{key} does not reproduce the committed results")
+          rows = {c["id"]: c["rows"] for c in fresh["E3"]}
+          committed_rows = {c["id"]: c["rows"] for c in committed["E3"]}
+          if rows != committed_rows:
+              sys.exit("E3 row counts do not reproduce")
+          print("E1, E2, and E3 row counts reproduce the committed results")
+          PY

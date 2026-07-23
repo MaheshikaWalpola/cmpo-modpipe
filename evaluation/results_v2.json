@@ -91,7 +91,7 @@
       "answered": true,
       "sample": [
         "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Center",
-        "None"
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#PSI"
       ]
     },
     {
@@ -101,7 +101,7 @@
       "rows": 5,
       "answered": true,
       "sample": [
-        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Backin"
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Membra"
       ]
     },
     {
@@ -187,5 +187,5 @@
       "sample": []
     }
   ],
-  "runtime_s": 68.8
+  "runtime_s": 84.6
 }

@@ -247,7 +247,10 @@ CQS = [
     ("CQ3", "Which carrier-head pressure zones are modeled, with which canonical unit?",
      "Multi-zone head pressure (Luo & Dornfeld 2004)",
      """SELECT ?zone ?u WHERE {
-        ?zone rdfs:subClassOf+ cmpo:Pressure . OPTIONAL { ?zone cmpo:canonicalUnit ?u } } LIMIT 20"""),
+        ?zone rdfs:subClassOf+ cmpo:Pressure .
+        OPTIONAL { ?zone cmpo:canonicalUnit ?own }
+        OPTIONAL { cmpo:Pressure cmpo:canonicalUnit ?fam }
+        BIND(COALESCE(?own, ?fam) AS ?u) } LIMIT 20"""),
     ("CQ4", "What conditioning-related usage counters accompany observations of a wafer?",
      "Pad conditioning literature",
      """SELECT DISTINCT ?p WHERE {

@@ -27,6 +27,12 @@ Evaluation:
   seeds 7 and 123 reproduce the seed-42 detection counts exactly.
 - Added the punning-fix baseline condition
   (`modpipe/punning_fix_baseline.py`).
+- Corrected the CQ3 query translation: the canonical unit of a pressure
+  zone is declared on the `cmpo:Pressure` family, which the original query
+  did not reach; the corrected query binds it (row counts unchanged).
+- Added `modpipe/run_all.py`, a single end-to-end command (generation,
+  two-tier gate, persistence with the validation report beside the graph),
+  and pinned exact dependency versions in `requirements.txt`.
 
 Repository:
 - All scripts run from a fresh clone with repository-relative paths.

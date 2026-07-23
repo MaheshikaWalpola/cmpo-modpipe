@@ -43,3 +43,21 @@ conversion): the ontology is consistent with zero unsatisfiable classes.
 On a commodity laptop-class container: pipeline about 17 s, evaluation
 harness about 69 s, SOSA-SHACL baseline about 3 min. Runtime fields inside
 the committed JSON files are from the recorded runs.
+
+## Per-shape target coverage
+
+Counted on the union of the released graph and ontology (rdf:type resolved
+over rdfs:subClassOf*, the regime of the E1 gate run): the five tier-1
+shapes target 25,278 observations (CMPObservationShape), 7 wafers, 6
+polishing steps, 7 tools, and 7 chambers. Together the targeted classes
+hold 25,297 of the 25,388 typed instances in the graph (99.6%). The
+aggregate figure is in the paper; these are the per-shape counts behind it.
+
+## Continuous integration
+
+The GitHub Actions workflow (.github/workflows/ci.yml) runs the evaluation
+harness on every push against the committed knowledge graph and fails if
+E1, E2, or the E3 row counts stop reproducing the committed results. The
+generator stage is not exercised in CI because the PHM 2016 source CSVs
+are not redistributable; run it locally per the README. SHA256SUMS at the
+repository root lists checksums for all released data artifacts.

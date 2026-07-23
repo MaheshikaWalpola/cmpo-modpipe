@@ -37,7 +37,9 @@ synthetic completion sample.
 pip install -r requirements.txt
 # run from the repository root
 python3 modpipe/modpipe.py       # stages 1-4: profile, align, normalize, generate (about 17 s)
-python3 modpipe/evaluate_v2.py   # gate run, seeded-error study (seed 42), competency questions (about 69 s)
+python3 modpipe/run_all.py       # or end-to-end: generation, two-tier gate, persistence with the
+                                 # validation report written next to the graph (modpipe/out/)
+python3 modpipe/evaluate_v2.py   # gate run, seeded-error study (seed 42), competency questions (about 80 s)
 ```
 
 The external-baseline studies require the published SOSA-SHACL suite:
