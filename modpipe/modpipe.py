@@ -21,6 +21,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
+
+import os as _os
+def _find(*cands):
+    for c in cands:
+        if _os.path.exists(c): return c
+    raise FileNotFoundError("none of: " + ", ".join(cands) + " -- run from the repository root")
+
 from rdflib import Graph, Literal, Namespace, RDF, RDFS, URIRef, XSD
 
 CMPO = Namespace("https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#")
@@ -31,16 +38,11 @@ HERE = Path(__file__).parent
 OUT = HERE / "out"
 OUT.mkdir(exist_ok=True)
 
-MAPPING_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/csv_to_cmpo_v2.0_mapping_test_sample.csv"
-SYNTH_XLSX = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx"
-import os as _os
-def _find(*cands):
-    for c in cands:
-        if _os.path.exists(c): return c
-    raise FileNotFoundError("none of: " + ", ".join(cands) + " -- run from the repository root")
+MAPPING_CSV = _find("mapping/csv_to_cmpo_v2.0_mapping_test_sample.csv", "csv_to_cmpo_v2.0_mapping_test_sample.csv")
+SYNTH_XLSX = _find("synthetic/CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx", "CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx")
 ONTOLOGY = _find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl")
-PROCESS_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/Test CSV/PHM Daten/data/2016 PHM DATA CHALLENGE CMP DATA SET/CMP-data/test/CMP-test-000.csv"
-RR_CSV = "/mnt/user-data/uploads/PhD/SemIIM2026_submission/Test CSV/PHM Daten/data/2016 PHM DATA CHALLENGE CMP DATA SET/CMP-test-removalrate.csv"
+PROCESS_CSV = _find("data/CMP-test-000.csv", "CMP-test-000.csv")  # obtain from the PHM Society 2016 Data Challenge (see data/README.txt); place in data/
+RR_CSV = _find("data/CMP-test-removalrate.csv", "CMP-test-removalrate.csv")  # same source as PROCESS_CSV
 
 # measurement column -> observable-property class comes from the mapping spec;
 # identifier/context columns are handled structurally per its rdf_pattern notes.
