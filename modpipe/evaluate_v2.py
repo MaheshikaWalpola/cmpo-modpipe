@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ModPipe evaluation on the CMPO v2.0.1 knowledge graph.
+"""ModPipe evaluation on the CMPO v2.0.2 knowledge graph.
 
 E1 Gate run: validate the full generated KG (union with the ontology so
    rdfs:subClassOf* paths resolve) against tier-1 (core) and tier-1+2
@@ -35,7 +35,7 @@ def _find(*cands):
 
 def load():
     ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
-    kg = Graph(); kg.parse(_find("out/kg_unvalidated.ttl", "kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
+    kg = Graph(); kg.parse(_find("modpipe/out/kg_unvalidated.ttl", "out/kg_unvalidated.ttl", "kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
     core = Graph(); core.parse(_find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle")
     both = Graph(); both.parse(_find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle"); both.parse(_find("shapes/shapes_sparql.ttl", "shapes_sparql.ttl"), format="turtle")
     return ont, kg, core, both
@@ -323,6 +323,7 @@ def main():
     R["E2"] = experiment_2(sub, core, both)
     R["E3"] = experiment_3(kg, ont)
     R["runtime_s"] = round(time.time() - t0, 1)
+    _os.makedirs("out", exist_ok=True)
     json.dump(R, open("out/results_v2.json", "w"), indent=2, default=str)
     print(f"done in {R['runtime_s']}s -> out/results_v2.json")
 

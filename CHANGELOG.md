@@ -33,6 +33,16 @@ Evaluation:
 - Added `modpipe/run_all.py`, a single end-to-end command (generation,
   two-tier gate, persistence with the validation report beside the graph),
   and pinned exact dependency versions in `requirements.txt`.
+- Script repairs after an external reproduction attempt: two baseline
+  scripts had syntax errors introduced during the repository-relative path
+  retrofit (a comment swallowed a closing parenthesis); the three auxiliary
+  scripts now locate the harness at `modpipe/evaluate_v2.py` from the
+  repository root; `evaluate_v2.py` creates `out/` before writing and
+  prefers the freshly generated graph over the committed one. All six
+  released scripts were then re-verified from a fresh clone: every
+  committed result reproduces exactly.
+- Added a CI workflow (`.github/workflows/ci.yml`), `SHA256SUMS`, and
+  `CODE_OF_CONDUCT.md`.
 
 Repository:
 - All scripts run from a fresh clone with repository-relative paths.

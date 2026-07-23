@@ -3,14 +3,15 @@
 parameter class as a sosa:ObservableProperty individual (one triple per class),
 the fix Section 6.3 names as planned. Same RNG protocol as the other runs."""
 import json, sys, time
-import importlib.util
-spec = importlib.util.spec_from_file_location("ev", "evaluate_v2.py")
-ev = importlib.util.module_from_spec(spec); spec.loader.exec_module(ev)
 import os as _os
 def _find(*cands):
     for c in cands:
         if _os.path.exists(c): return c
-    raise FileNotFoundError("none of: " + ", ".join(cands))
+    raise FileNotFoundError("none of: " + ", ".join(cands) + " -- run from the repository root")
+
+import importlib.util
+spec = importlib.util.spec_from_file_location("ev", _find("modpipe/evaluate_v2.py", "evaluate_v2.py"))
+ev = importlib.util.module_from_spec(spec); spec.loader.exec_module(ev)
 
 from pyshacl import validate
 from rdflib import Graph, RDF, RDFS, URIRef, Namespace
@@ -33,7 +34,8 @@ def run_val_v(data, shapes):
 
 ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
 kg = Graph(); kg.parse(_find("kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
-shapes = Graph(); shapes.parse(_find("KWG-SHACL/shacl_sosa.ttl", "shapes/shacl_sosa_external.ttl"  # git clone https://github.com/KnowWhereGraph/KWG-SHACL), format="turtle")
+# SOSA-SHACL suite: git clone https://github.com/KnowWhereGraph/KWG-SHACL in the repo root
+shapes = Graph(); shapes.parse(_find("KWG-SHACL/shacl_sosa.ttl", "shapes/shacl_sosa_external.ttl"), format="turtle")
 repairs = 0
 for shape, pnode in list(shapes.subject_objects(SH.property)):
     if (pnode, SH.path, None) not in shapes:

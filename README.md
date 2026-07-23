@@ -50,7 +50,10 @@ type-materialized conditions, about 3 min) and
 `python3 modpipe/multiseed_e2.py` repeats the seeded-error study under
 additional seeds. Committed results for all runs are in `evaluation/`.
 
-`evaluate_v2.py` writes `out/results_v2.json`; the committed copy in
+`evaluate_v2.py` evaluates the freshly generated graph
+(`modpipe/out/kg_unvalidated.ttl`) when a generator run precedes it, and
+otherwise the committed graph in `kg/`; the two are identical for the
+released inputs. It writes `out/results_v2.json`; the committed copy in
 `evaluation/` is the run reported in the paper. Seeding uses a fixed random
 seed, so the detection table reproduces exactly.
 

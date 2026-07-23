@@ -15,18 +15,15 @@ Detection criteria per seeded node, differential vs. the clean baseline:
 Also logs per-config clean-baseline violation counts.
 """
 import json, sys, time
-sys.path.insert(0, ".")
-import importlib.util
-spec = importlib.util.spec_from_file_location("ev", "evaluate_v2.py")
-ev = importlib.util.module_from_spec(spec)
-# patch load() paths not needed; we don't call ev.load()
-spec.loader.exec_module(ev)
-
 import os as _os
 def _find(*cands):
     for c in cands:
         if _os.path.exists(c): return c
-    raise FileNotFoundError("none of: " + ", ".join(cands))
+    raise FileNotFoundError("none of: " + ", ".join(cands) + " -- run from the repository root")
+
+import importlib.util
+spec = importlib.util.spec_from_file_location("ev", _find("modpipe/evaluate_v2.py", "evaluate_v2.py"))
+ev = importlib.util.module_from_spec(spec); spec.loader.exec_module(ev)
 
 from pyshacl import validate
 from rdflib import Graph, RDF, RDFS, URIRef
@@ -72,7 +69,8 @@ def main():
     t0 = time.time()
     ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
     kg = Graph(); kg.parse(_find("kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
-    sosa_shapes = Graph(); sosa_shapes.parse(_find("KWG-SHACL/shacl_sosa.ttl", "shapes/shacl_sosa_external.ttl"  # git clone https://github.com/KnowWhereGraph/KWG-SHACL), format="turtle")
+    # SOSA-SHACL suite: git clone https://github.com/KnowWhereGraph/KWG-SHACL in the repo root
+    sosa_shapes = Graph(); sosa_shapes.parse(_find("KWG-SHACL/shacl_sosa.ttl", "shapes/shacl_sosa_external.ttl"), format="turtle")
     # Minimal mechanical repair: the published suite wraps four sh:or lists in
     # sh:property blank nodes carrying no sh:path (two each in the observation
     # and actuation node shapes), which strict validators
