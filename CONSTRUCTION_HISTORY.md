@@ -11,11 +11,13 @@ language model, in three stages. At every stage the model produced the draft
 and the first author reviewed it, checked class comments against fab
 terminology, and removed or corrected mistaken proposals.
 
-**Stage 1 — BFO-aligned draft.** The first attempt used Basic Formal Ontology
-(BFO) as the top-level ontology. The model produced a draft organized around
-CMP as the central concept. This structure did not fit the data: the
-measurements in the source files describe wafers and process runs, not the
-abstract process.
+**Stage 1 — BFO-aligned draft (Schema v1).** The first attempt used Basic
+Formal Ontology (BFO) as the top-level reference and produced a hybrid schema,
+referencing BFO, RO, and IAO, organized around CMP as the central concept.
+That schema is preserved, ran in the prototype portal, and remains a source of
+upper-level mappings. A later structural comparison of the two designs
+recommended keeping a single canonical observation core and attaching BFO
+groundings as a separate alignment module rather than merging the two models.
 
 **Stage 2 — restructuring around the process and its wafers.** The model was
 asked to rebuild the ontology with the wafer as the main element of the CMP
