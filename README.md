@@ -20,6 +20,7 @@ co-located with ISWC 2026).
 | `evaluation/` | Raw results of the paper's experiments (`results_v2.json`), generation statistics, and source-data profile |
 | `legacy_audit/` | The E0 audit of an earlier deployment (runs against the [KGPortal](https://github.com/MaheshikaWalpola/KGPortal) repository; see below) |
 | `data/` | Empty by design; place the PHM 2016 CSVs here (see next section) |
+| `docs/` | Notes on data scope (`DATA_SUFFICIENCY.md`) and on reading the evaluation scripts and results (`EVALUATION_NOTES.md`) |
 
 ## Data
 
@@ -34,12 +35,20 @@ synthetic completion sample.
 
 ```bash
 pip install -r requirements.txt
-cd modpipe
-python3 modpipe.py       # stages 1-4: profile, align, normalize, generate (about 17 s)
-python3 evaluate_v2.py   # gate run, seeded-error study (seed 42), competency questions (about 79 s)
+# run from the repository root
+python3 modpipe/modpipe.py       # stages 1-4: profile, align, normalize, generate (about 17 s)
+python3 modpipe/evaluate_v2.py   # gate run, seeded-error study (seed 42), competency questions (about 69 s)
 ```
 
-`evaluate_v2.py` writes `modpipe/out/results_v2.json`; the committed copy in
+The external-baseline studies require the published SOSA-SHACL suite:
+`git clone https://github.com/KnowWhereGraph/KWG-SHACL` in the repository
+root, then run `python3 modpipe/baseline_sosashacl.py` (as-published and
+type-materialized conditions, about 3 min) and
+`python3 modpipe/punning_fix_baseline.py` (the punning-fix condition).
+`python3 modpipe/multiseed_e2.py` repeats the seeded-error study under
+additional seeds. Committed results for all runs are in `evaluation/`.
+
+`evaluate_v2.py` writes `out/results_v2.json`; the committed copy in
 `evaluation/` is the run reported in the paper. Seeding uses a fixed random
 seed, so the detection table reproduces exactly.
 
@@ -49,6 +58,15 @@ and measures the vacuity of its shape suite. To run it, clone
 [KGPortal](https://github.com/MaheshikaWalpola/KGPortal) and execute the
 script from that repository's root; the committed `results.json` is the run
 reported in the paper.
+
+## Versioning
+
+Ontology files carry their version in the file name (`ontology/cmpo-v2.0.2.ttl`),
+and each repository release is tagged with the matching version (`v2.0.2`), so a
+tag always pins one consistent ontology + knowledge graph + results state. The
+version reported in the SemIIM 2026 paper is `v2.0.2`. The full history,
+including the pre-release Schema v1 and v2.0 stages, is in `CHANGELOG.md`; how
+the ontology was built is in `CONSTRUCTION_HISTORY.md`.
 
 ## Licenses
 
@@ -66,5 +84,5 @@ on CEUR-WS.org.
 Developed in the WiProFlex project, funded by the European Social Fund Plus
 (ESF+) and the Free State of Saxony under grant 100693458. The ontology was
 drafted with large language model assistance and revised by the authors; the
-elicitation prompts are documented with the resource, and the paper contains
-the corresponding declaration.
+construction history is documented in `CONSTRUCTION_HISTORY.md`, and the paper
+contains the corresponding declaration.

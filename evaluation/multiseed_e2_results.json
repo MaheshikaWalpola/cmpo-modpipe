@@ -1,0 +1,94 @@
+{
+  "7": {
+    "subgraph_triples": 41467,
+    "results": {
+      "T1_missing_value": {
+        "seeded": 50,
+        "tier1": 50,
+        "tier12": 50
+      },
+      "T2_datatype": {
+        "seeded": 50,
+        "tier1": 50,
+        "tier12": 50
+      },
+      "T3_negative_value": {
+        "seeded": 50,
+        "tier1": 0,
+        "tier12": 50
+      },
+      "T4_dangling_foi": {
+        "seeded": 50,
+        "tier1": 50,
+        "tier12": 50
+      },
+      "T5_plausible_swap": {
+        "seeded": 100,
+        "tier1": 0,
+        "tier12": 0
+      },
+      "T6_undeclared_property": {
+        "seeded": 50,
+        "tier1": 0,
+        "tier12": 50
+      },
+      "T7_unit_scale": {
+        "seeded": 50,
+        "tier1": 0,
+        "tier12": 0
+      },
+      "T8_duplicate_wafer": {
+        "seeded": 4,
+        "tier1": 0,
+        "tier12": 4
+      }
+    },
+    "runtime_s": 25.4
+  },
+  "123": {
+    "subgraph_triples": 41473,
+    "results": {
+      "T1_missing_value": {
+        "seeded": 50,
+        "tier1": 50,
+        "tier12": 50
+      },
+      "T2_datatype": {
+        "seeded": 50,
+        "tier1": 50,
+        "tier12": 50
+      },
+      "T3_negative_value": {
+        "seeded": 50,
+        "tier1": 0,
+        "tier12": 50
+      },
+      "T4_dangling_foi": {
+        "seeded": 50,
+        "tier1": 50,
+        "tier12": 50
+      },
+      "T5_plausible_swap": {
+        "seeded": 100,
+        "tier1": 0,
+        "tier12": 0
+      },
+      "T6_undeclared_property": {
+        "seeded": 50,
+        "tier1": 0,
+        "tier12": 50
+      },
+      "T7_unit_scale": {
+        "seeded": 50,
+        "tier1": 0,
+        "tier12": 0
+      },
+      "T8_duplicate_wafer": {
+        "seeded": 4,
+        "tier1": 0,
+        "tier12": 4
+      }
+    },
+    "runtime_s": 24.2
+  }
+}
