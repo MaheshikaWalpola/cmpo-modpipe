@@ -22,7 +22,28 @@ per-file status. None of this changes the tagged v2.0.2 artifact.
   confirmed exactly, sixteen statements pass non-vacuously.
 - Repository housekeeping: `.gitignore`, `evaluation/README.md`.
 
-## v2.1 — 2026-07-26 (version reported in the SemIIM 2026 paper)
+## v2.1.1 — 2026-07-26 (artifact revision; ontology unchanged at v2.1)
+
+Competency-question repairs, so that the released harness matches the suite the
+paper reports. The ontology and the knowledge graph are unchanged.
+
+- CQ12 traversed `cmpo:Pad`, a class CMPO does not declare, and returned zero.
+  The zero measured the query, not the graph. It now traverses `cmpo:Consumable`,
+  under which pad and conditioning consumables sit, and returns the three
+  synthetic pad and conditioner entities.
+- CQ7 reported only the count for wafers typed exactly `cmpo:Wafer`. It now
+  returns both scopes in one row: zero of the four PHM wafers, three of the
+  seven instances of `cmpo:Wafer` and its subclasses.
+- CQ3 was titled "carrier-head pressure zones" but the query returns every
+  subclass of `cmpo:Pressure`, including chamber pressure, contact pressure and
+  downforce. Retitled to "pressure-related parameter classes".
+- CQ6 and CQ8 provenance labels now state their combined scope (PHM+synthetic
+  and ontology+synthetic respectively) rather than implying a single source.
+- `evaluation/results_v2.json` regenerated. E1 and E2 are byte-identical in
+  every count; the only change is CQ12 moving from 0 rows to 3.
+- `SHA256SUMS` refreshed.
+
+## v2.1 — 2026-07-26 (ontology version reported in the SemIIM 2026 paper)
 
 Renumbering and two corrections. No ontology term was added, removed or
 renamed relative to v2.0.2, so any graph built against v2.0.2 remains valid.

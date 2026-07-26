@@ -85,12 +85,12 @@
     },
     {
       "id": "CQ3",
-      "q": "Which carrier-head pressure zones are modeled, with which canonical unit?",
+      "q": "Which pressure-related parameter classes are represented, and what are their canonical units?",
       "prov": "Multi-zone head pressure (Luo & Dornfeld 2004)",
       "rows": 8,
       "answered": true,
       "sample": [
-        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Center",
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Contac",
         "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#PSI"
       ]
     },
@@ -101,7 +101,7 @@
       "rows": 5,
       "answered": true,
       "sample": [
-        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Membra"
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Pressu"
       ]
     },
     {
@@ -116,8 +116,8 @@
     },
     {
       "id": "CQ6",
-      "q": "How many observations share the polishing step of a given wafer and stage?",
-      "prov": "Run-to-run comparability (Winkler et al. 2025)",
+      "q": "How many observations share the polishing step of a given wafer and stage? (PHM+synthetic)",
+      "prov": "Run-to-run comparability (Winkler et al. 2025); scope: PHM + synthetic steps",
       "rows": 1,
       "answered": true,
       "sample": [
@@ -126,18 +126,19 @@
     },
     {
       "id": "CQ7",
-      "q": "For which wafers is a removal-rate observation missing?",
+      "q": "For which wafers is a removal-rate observation missing? (reported for both scopes)",
       "prov": "Completeness probe; PHM16 has unlabeled runs",
       "rows": 1,
       "answered": true,
       "sample": [
-        "0"
+        "0",
+        "3"
       ]
     },
     {
       "id": "CQ8",
-      "q": "Which slurry chemistry parameters are represented, and which have data?",
-      "prov": "Slurry chemistry as MRR driver",
+      "q": "Which slurry chemistry parameters are represented, and which have data? (ontology+synthetic)",
+      "prov": "Slurry chemistry as MRR driver; scope: ontology hierarchy + synthetic observations",
       "rows": 8,
       "answered": true,
       "sample": [
@@ -175,17 +176,20 @@
       "answered": true,
       "sample": [
         "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan",
-        "4.2"
+        "4.284"
       ]
     },
     {
       "id": "CQ12",
       "q": "Which pad or conditioning entities are described, with which properties?",
       "prov": "Consumable state (conditioning literature)",
-      "rows": 0,
-      "answered": false,
-      "sample": []
+      "rows": 3,
+      "answered": true,
+      "sample": [
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instan",
+        "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#Condit"
+      ]
     }
   ],
-  "runtime_s": 84.6
+  "runtime_s": 70.2
 }

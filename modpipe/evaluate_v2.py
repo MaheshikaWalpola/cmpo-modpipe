@@ -244,7 +244,7 @@ CQS = [
         ?o sosa:observedProperty cmpo:AverageRemovalRate ;
            sosa:hasFeatureOfInterest ?w ; cmpo:duringStep ?step ; sosa:hasSimpleResult ?v .
         ?w cmpo:hasWaferId ?id . FILTER(str(?id)="373446766") } LIMIT 5"""),
-    ("CQ3", "Which carrier-head pressure zones are modeled, with which canonical unit?",
+    ("CQ3", "Which pressure-related parameter classes are represented, and what are their canonical units?",
      "Multi-zone head pressure (Luo & Dornfeld 2004)",
      """SELECT ?zone ?u WHERE {
         ?zone rdfs:subClassOf+ cmpo:Pressure .
@@ -260,18 +260,22 @@ CQS = [
     ("CQ5", "On which tools and chambers were observations made?",
      "PHM16 dataset fields",
      """SELECT DISTINCT ?plat WHERE { ?o a cmpo:CMPObservation ; cmpo:madeOnPlatform ?plat . } LIMIT 12"""),
-    ("CQ6", "How many observations share the polishing step of a given wafer and stage?",
-     "Run-to-run comparability (Winkler et al. 2025)",
+    ("CQ6", "How many observations share the polishing step of a given wafer and stage? (PHM+synthetic)",
+     "Run-to-run comparability (Winkler et al. 2025); scope: PHM + synthetic steps",
      """SELECT (COUNT(?o) AS ?n) WHERE {
         ?o cmpo:duringStep ?st . ?st cmpo:stageLabel ?l . FILTER(str(?l)="A") }"""),
-    ("CQ7", "For which wafers is a removal-rate observation missing?",
+    ("CQ7", "For which wafers is a removal-rate observation missing? (reported for both scopes)",
      "Completeness probe; PHM16 has unlabeled runs",
-     """SELECT (COUNT(DISTINCT ?w) AS ?n) WHERE {
-        ?w a cmpo:Wafer .
-        FILTER NOT EXISTS { ?o sosa:observedProperty cmpo:AverageRemovalRate ;
-                               sosa:hasFeatureOfInterest ?w . } }"""),
-    ("CQ8", "Which slurry chemistry parameters are represented, and which have data?",
-     "Slurry chemistry as MRR driver",
+     """SELECT (COUNT(DISTINCT ?w) AS ?phm_missing) (COUNT(DISTINCT ?w2) AS ?all_missing) WHERE {
+        { SELECT DISTINCT ?w WHERE { ?w a cmpo:Wafer .
+          FILTER NOT EXISTS { ?o sosa:observedProperty cmpo:AverageRemovalRate ;
+                                 sosa:hasFeatureOfInterest ?w . } } }
+        UNION
+        { SELECT DISTINCT ?w2 WHERE { ?w2 a ?c . ?c rdfs:subClassOf* cmpo:Wafer .
+          FILTER NOT EXISTS { ?o2 sosa:observedProperty cmpo:AverageRemovalRate ;
+                                  sosa:hasFeatureOfInterest ?w2 . } } } }"""),
+    ("CQ8", "Which slurry chemistry parameters are represented, and which have data? (ontology+synthetic)",
+     "Slurry chemistry as MRR driver; scope: ontology hierarchy + synthetic observations",
      """SELECT ?p (COUNT(?o) AS ?n) WHERE {
         ?p rdfs:subClassOf* cmpo:SlurryChemistryParameter .
         OPTIONAL { ?o sosa:observedProperty ?p } } GROUP BY ?p LIMIT 20"""),
@@ -288,8 +292,12 @@ CQS = [
         ?o sosa:observedProperty cmpo:ContactPressure ; sosa:hasSimpleResult ?v . } LIMIT 5"""),
     ("CQ12", "Which pad or conditioning entities are described, with which properties?",
      "Consumable state (conditioning literature)",
+     # Repaired 2026-07-26: the previous version traversed cmpo:Pad, a class CMPO does
+     # not declare, so it returned zero and measured the query rather than the graph.
+     # Pad and conditioning consumables sit under cmpo:Consumable.
      """SELECT DISTINCT ?e ?cls WHERE {
-        ?e a ?cls . ?cls rdfs:subClassOf* cmpo:Pad . } LIMIT 10"""),
+        ?e a ?cls . ?cls rdfs:subClassOf+ cmpo:Consumable .
+        FILTER(CONTAINS(LCASE(STR(?cls)), "pad") || CONTAINS(LCASE(STR(?cls)), "disc")) }"""),
 ]
 
 
