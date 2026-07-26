@@ -1,0 +1,168 @@
+# Graph-grounded 20-question suite as SPARQL audit queries — GraphDB version.
+# Paste each query into GraphDB Workbench (SPARQL view) on a repository that
+# contains BOTH kg_cmpo_v2.0.2.ttl AND cmpo-v2.0.2.ttl. Each query returns
+# the VIOLATING nodes; an empty result means the statement holds.
+# Class membership uses rdf:type/rdfs:subClassOf* paths, so no inference
+# ruleset is required. Written 2026-07-24; executed counts for the released
+# KG are recorded in graph_grounded_results_2026-07-24.md.
+#
+# Shared prefixes for every query:
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+# ---- Q1: exactly one float result per observation (violations; found 0) ----
+SELECT ?n ?c WHERE {
+  { SELECT ?n (COUNT(?v) AS ?c) WHERE {
+      ?n a cmpo:CMPObservation . OPTIONAL { ?n sosa:hasSimpleResult ?v }
+    } GROUP BY ?n }
+  FILTER (?c != 1)
+} ;
+
+# ---- Q1b: result not typed xsd:float (found 0) ----
+SELECT ?n ?v WHERE {
+  ?n a cmpo:CMPObservation ; sosa:hasSimpleResult ?v .
+  FILTER (datatype(?v) != xsd:float)
+} ;
+
+# ---- Q2: observed property not declared under cmpo:CMPParameter (found 0) ----
+SELECT ?n ?p WHERE {
+  ?n a cmpo:CMPObservation ; sosa:observedProperty ?p .
+  FILTER NOT EXISTS { ?p rdfs:subClassOf* cmpo:CMPParameter }
+} ;
+
+# ---- Q3: feature of interest missing or a literal (found 0) ----
+SELECT ?n WHERE {
+  ?n a cmpo:CMPObservation . OPTIONAL { ?n sosa:hasFeatureOfInterest ?f }
+  FILTER (!BOUND(?f) || isLiteral(?f))
+} ;
+
+# ---- Q4: observation without any platform link (found 20 = 16 synthetic + 4 removal-rate) ----
+SELECT ?n WHERE {
+  ?n a cmpo:CMPObservation .
+  FILTER NOT EXISTS { ?n cmpo:madeOnPlatform ?pl }
+} ;
+
+# ---- Q5: not exactly one raw timestamp and one result time (found 4, the removal-rate observations) ----
+SELECT ?n ?ct ?cr WHERE {
+  { SELECT ?n (COUNT(?t) AS ?ct) (COUNT(?r) AS ?cr) WHERE {
+      ?n a cmpo:CMPObservation .
+      OPTIONAL { ?n cmpo:rawTimestamp ?t } OPTIONAL { ?n sosa:resultTime ?r }
+    } GROUP BY ?n }
+  FILTER (?ct != 1 || ?cr != 1)
+} ;
+
+# ---- Q6: raw timestamp negative or outside the campaign range (found 0) ----
+# Range frozen from the released graph's verified CQ9 answer.
+SELECT ?n ?t WHERE {
+  ?n cmpo:rawTimestamp ?t .
+  FILTER (?t < 0 || ?t < 481638013.333 || ?t > 481671691.0)
+} ;
+
+# ---- Q7a: wafer without exactly one identifier (found 0; includes wafer subclasses) ----
+SELECT ?n ?c WHERE {
+  { SELECT ?n (COUNT(?i) AS ?c) WHERE {
+      ?n rdf:type/rdfs:subClassOf* cmpo:Wafer . OPTIONAL { ?n cmpo:hasWaferId ?i }
+    } GROUP BY ?n }
+  FILTER (?c != 1)
+} ;
+
+# ---- Q7b: two wafers sharing an identifier (found 0) ----
+SELECT ?n ?m ?i WHERE {
+  ?n cmpo:hasWaferId ?i . ?m cmpo:hasWaferId ?i . FILTER (?n != ?m)
+} ;
+
+# ---- Q8: polishing step without stage label (found 1: syn_step_metrology_001) ----
+SELECT ?n WHERE {
+  ?n a cmpo:PolishingStep . FILTER NOT EXISTS { ?n cmpo:stageLabel ?l }
+} ;
+
+# ---- Q9: tool without tool identifier (found 3: syn_ellips_01, syn_profilo_01, syn_sem_01) ----
+SELECT ?n WHERE {
+  ?n rdf:type/rdfs:subClassOf* cmpo:Tool .
+  FILTER NOT EXISTS { ?n cmpo:toolId ?i }
+} ;
+
+# ---- Q10: chamber without chamber number (found 0) ----
+SELECT ?n WHERE {
+  ?n a cmpo:Chamber . FILTER NOT EXISTS { ?n cmpo:chamberNumber ?c }
+} ;
+
+# ---- Q11: pressure zone without zone position (found 0; includes zone subclasses) ----
+SELECT ?n WHERE {
+  ?n rdf:type/rdfs:subClassOf* cmpo:PressureZone .
+  FILTER NOT EXISTS { ?n cmpo:zonePosition ?z }
+} ;
+
+# ---- Q12: negative value for a dimensioned quantity (found 0) ----
+# Families: pressures, rotation speeds (Velocity), slurry flows, usage
+# counters (incl. DresserUsage), removal rates. Slurry-chemistry values
+# (e.g. ZetaPotential) are legitimately negative and are not targeted.
+SELECT ?n ?v WHERE {
+  ?n a cmpo:CMPObservation ; sosa:observedProperty ?p ; sosa:hasSimpleResult ?v .
+  FILTER (?v < 0)
+  { SELECT DISTINCT ?p WHERE {
+      VALUES ?family { cmpo:Pressure cmpo:Velocity cmpo:SlurryFlowRate
+                       cmpo:UsageParameter cmpo:MaterialRemovalRate cmpo:DresserUsage }
+      ?p rdfs:subClassOf* ?family } }
+} ;
+
+# ---- Q13: UCL not strictly greater than LCL (found 0) ----
+SELECT ?n WHERE {
+  ?n cmpo:upperControlLimit ?u ; cmpo:lowerControlLimit ?l . FILTER (?u <= ?l)
+} ;
+
+# ---- Q14: control band not inside specification band (found 0) ----
+SELECT ?n WHERE {
+  ?n cmpo:upperControlLimit ?ucl ; cmpo:lowerControlLimit ?lcl ;
+     cmpo:upperSpecLimit ?usl ; cmpo:lowerSpecLimit ?lsl .
+  FILTER (?lcl < ?lsl || ?ucl > ?usl)
+} ;
+
+# ---- Q15: process window max not strictly greater than min (found 0) ----
+SELECT ?n WHERE {
+  ?n cmpo:windowMaxValue ?mx ; cmpo:windowMinValue ?mn . FILTER (?mx <= ?mn)
+} ;
+
+# ---- Q16a: lot without positive integer size (found 0) ----
+SELECT ?n WHERE {
+  ?n rdf:type/rdfs:subClassOf* cmpo:Lot . OPTIONAL { ?n cmpo:lotSize ?s }
+  FILTER (!BOUND(?s) || ?s < 1)
+} ;
+
+# ---- Q16b: more wafers linked than the lot size (found 0) ----
+SELECT ?n ?c ?s WHERE {
+  ?n cmpo:lotSize ?s .
+  { SELECT ?n (COUNT(?w) AS ?c) WHERE { ?w cmpo:isPartOfLot ?n } GROUP BY ?n }
+  FILTER (?c > ?s)
+} ;
+
+# ---- Q17: wafer diameter not in the standard set (found 0) ----
+SELECT ?n ?d WHERE {
+  ?n cmpo:diameter ?d .
+  FILTER (?d != 100 && ?d != 150 && ?d != 200 && ?d != 300)
+} ;
+
+# ---- Q18: edge exclusion negative or >= half diameter (found 0) ----
+SELECT ?n ?e WHERE {
+  ?n cmpo:edgeExclusion ?e . OPTIONAL { ?n cmpo:diameter ?d }
+  FILTER (?e < 0 || (BOUND(?d) && ?e >= ?d / 2))
+} ;
+
+# ---- Q19a/b: negative groove depth or width (found 0) ----
+SELECT ?n ?v WHERE {
+  { ?n cmpo:grooveDepth ?v } UNION { ?n cmpo:grooveWidth ?v }
+  FILTER (?v < 0)
+} ;
+
+# ---- Q19c: groove pattern stated without pad type (found 0) ----
+SELECT ?n WHERE {
+  ?n cmpo:hasGroovePattern ?g . FILTER NOT EXISTS { ?n cmpo:padType ?t }
+} ;
+
+# ---- Q20a: Preston coefficient not strictly positive (found 0) ----
+SELECT ?n ?v WHERE { ?n cmpo:prestonCoefficient ?v . FILTER (?v <= 0) } ;
+
+# ---- Q20b: selectivity ratio not strictly positive (found 0) ----
+SELECT ?n ?v WHERE { ?n cmpo:selectivityRatio ?v . FILTER (?v <= 0) }

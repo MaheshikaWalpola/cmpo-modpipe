@@ -40,7 +40,7 @@ OUT.mkdir(exist_ok=True)
 
 MAPPING_CSV = _find("mapping/csv_to_cmpo_v2.0_mapping_test_sample.csv", "csv_to_cmpo_v2.0_mapping_test_sample.csv")
 SYNTH_XLSX = _find("synthetic/CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx", "CMPO_v2.0_Synthetic_Completion_Table_test_sample.xlsx")
-ONTOLOGY = _find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl")
+ONTOLOGY = _find("ontology/schema_v2.1.ttl", "schema_v2.1.ttl", "ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl")
 PROCESS_CSV = _find("data/CMP-test-000.csv", "CMP-test-000.csv")  # obtain from the PHM Society 2016 Data Challenge (see data/README.txt); place in data/
 RR_CSV = _find("data/CMP-test-removalrate.csv", "CMP-test-removalrate.csv")  # same source as PROCESS_CSV
 

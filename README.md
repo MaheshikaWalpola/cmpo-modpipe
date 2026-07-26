@@ -66,12 +66,17 @@ reported in the paper.
 
 ## Versioning
 
-Ontology files carry their version in the file name (`ontology/cmpo-v2.0.2.ttl`),
-and each repository release is tagged with the matching version (`v2.0.2`), so a
+Ontology files carry their version in the file name (`ontology/schema_v2.1.ttl`),
+and each repository release is tagged with the matching version (`v2.1`), so a
 tag always pins one consistent ontology + knowledge graph + results state. The
-version reported in the SemIIM 2026 paper is `v2.0.2`. The full history,
+version reported in the SemIIM 2026 paper is `v2.1`. The full history,
 including the pre-release Schema v1 and v2.0 stages, is in `CHANGELOG.md`; how
 the ontology was built is in `CONSTRUCTION_HISTORY.md`.
+
+Tagged states are frozen: nothing under a released tag is ever edited.
+Post-submission work happens on the `camera-ready/extensions` branch and is
+merged and tagged (next: `v2.2`) only when a revised paper cites it. The
+extension experiments and their status are listed in `evaluation/README.md`.
 
 ## Licenses
 

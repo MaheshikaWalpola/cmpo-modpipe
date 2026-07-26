@@ -3,9 +3,9 @@
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance#cmpo:AverageRemovalRate> cmpo:hasSPCLimit :syn_spc_mrr_01 .
+cmpo:AverageRemovalRate cmpo:hasSPCLimit :syn_spc_mrr_01 .
 
-<https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance#cmpo:RetainingRingPressure> cmpo:hasProcessWindow :syn_window_rrp_01 .
+cmpo:RetainingRingPressure cmpo:hasProcessWindow :syn_window_rrp_01 .
 
 :obs_-4224160592_A_00281_CENTER_AIR_BAG_PRESSURE a cmpo:CMPObservation ;
     sosa:hasFeatureOfInterest :wafer_-4224160592 ;

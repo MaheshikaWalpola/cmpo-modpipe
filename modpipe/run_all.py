@@ -42,7 +42,7 @@ spec.loader.exec_module(ev)
 from rdflib import Graph
 
 GEN = HERE / "out" / "kg_unvalidated.ttl"   # written by modpipe.py in stage 4
-ont = Graph(); ont.parse(ev._find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
+ont = Graph(); ont.parse(ev._find("ontology/schema_v2.1.ttl", "schema_v2.1.ttl", "ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
 kg = Graph(); kg.parse(str(GEN), format="turtle")
 core = Graph(); core.parse(ev._find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle")
 u = ev.union(kg, ont)

@@ -1,12 +1,77 @@
 # Changelog
 
 Versioning covers two things at once: the CMPO ontology (file names carry the
-version, e.g. `ontology/cmpo-v2.0.2.ttl`) and this repository as the paper's
-artifact (git tags, e.g. `v2.0.2`). The two move together: a tagged repository
+version, e.g. `ontology/schema_v2.1.ttl`) and this repository as the paper's
+artifact (git tags, e.g. `v2.1`). The two move together: a tagged repository
 state contains exactly one ontology version, the knowledge graph generated
 from it, and the evaluation results produced against that pair.
 
-## v2.0.2 — 2026-07-23 (version reported in the SemIIM 2026 paper)
+## Unreleased (branch `camera-ready/extensions`)
+
+Post-submission extension experiments; see `evaluation/README.md` for the
+per-file status. None of this changes the tagged v2.0.2 artifact.
+
+- R7 data-derived range-rule pilot: frozen per-property bounds, seeded-error
+  rerun with a fourth condition (T7 25/50, T5 23/100, clean graph 0
+  violations), results note with preregistration comparison and the
+  Python-hash-seed reproducibility finding.
+- R7e preregistration draft and expert-limits template for the non-circular
+  rerun with expert-stated operating limits.
+- Graph-grounded 20-question suite: hand-written SHACL and SPARQL audit
+  versions, run against the released graph; all four preregistered firings
+  confirmed exactly, sixteen statements pass non-vacuously.
+- Repository housekeeping: `.gitignore`, `evaluation/README.md`.
+
+## v2.1 — 2026-07-26 (version reported in the SemIIM 2026 paper)
+
+Renumbering and two corrections. No ontology term was added, removed or
+renamed relative to v2.0.2, so any graph built against v2.0.2 remains valid.
+
+Ontology:
+- Renumbered 2.0.2 to 2.1 and renamed `ontology/cmpo-v2.0.2.ttl` to
+  `ontology/schema_v2.1.ttl`. The 2.0.2 patch had declared a new object
+  property (`cmpo:madeOnPlatform`), which under semantic versioning is a minor
+  change rather than a patch; the number now reflects that. `owl:versionInfo`
+  and `dcterms:modified` updated accordingly, and a changelog entry (R1) added
+  to the file header. Logical content verified identical to 2.0.2 triple by
+  triple: 1,383 triples, 165 classes, 54 object properties, 63 datatype
+  properties.
+
+Knowledge graph:
+- Renamed `kg/kg_cmpo_v2.0.2.ttl` to `kg/kg_cmpo_v2.1.ttl`.
+- Corrected two malformed subject IRIs. The SPC-limit and process-window
+  triples had their subjects written as
+  `<…/cmpo/instance#cmpo:AverageRemovalRate>` and
+  `<…/cmpo/instance#cmpo:RetainingRingPressure>`: the prefixed names had been
+  serialised as relative IRIs and resolved against the instance namespace, so
+  both attached to nodes with no meaning. Subjects are now the parameter
+  classes `cmpo:AverageRemovalRate` and `cmpo:RetainingRingPressure`, as
+  `cmpo:hasSPCLimit` and `cmpo:hasProcessWindow` declare (domain
+  `cmpo:CMPParameter`). Triple count unchanged at 252,873; exactly two triples
+  differ. No competency question queried those triples, so no reported result
+  changes.
+
+Validation:
+- Re-validated the renamed pair. Tier 1 reports the same four findings as
+  v2.0.2 (three synthetic metrology tools without a tool identifier, one
+  synthetic metrology step without a stage label); tier-2 rules report zero.
+  Detection results for every experiment are unchanged.
+
+Naming and tooling:
+- One version number now runs across every artifact: `schema_v2.1.ttl`,
+  `kg_cmpo_v2.1.ttl`, tag `v2.1`, paper `silos_semiim2026_v2.1.tex`. The rule,
+  the version history and the words banned from filenames are documented in
+  the working folder's `VERSIONING.md`.
+- The `_find()` candidate lists in `modpipe/` now try the v2.1 filenames first
+  and keep the v2.0.2 names as fallbacks, so the scripts run against either
+  layout.
+- `SHA256SUMS` refreshed; `CITATION.cff` version set to 2.1.
+
+Note on the frozen tags: `v2.0.2` and `v2.0.2.1` are unchanged and still hold
+the original filenames and the two malformed IRIs. Published tags are never
+rewritten.
+
+## v2.0.2 — 2026-07-23 (patch; superseded by v2.1)
 
 Ontology:
 - Declared `cmpo:madeOnPlatform` as an object property. Earlier KG builds

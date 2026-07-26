@@ -1,0 +1,299 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#> .
+@prefix ggq:  <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/shapes/ggq#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Graph-grounded 20-question suite, hand-written SHACL (Option B of
+# graph_grounded_20_questions.md). Written 2026-07-24 against the released
+# kg_cmpo_v2.0.2.ttl (sha256 84298e89...) and cmpo-v2.0.2.ttl (91ef77b1...).
+# Every target class and property was checked to occur in the released graph
+# before writing, so no shape is vacuous by construction.
+# Run via run_graph_grounded_validation.py, which materializes the rdfs
+# subclass closure of rdf:type before validation (the KG types wafers, tools,
+# and zones by their most specific class only).
+# Q6 campaign range is frozen from the released graph's verified CQ9 answer:
+# [481638013.333, 481671691.0].
+
+ggq: a owl:Ontology ;
+  owl:imports sh: ;
+  sh:declare [ sh:prefix "cmpo" ; sh:namespace "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#"^^xsd:anyURI ] ;
+  sh:declare [ sh:prefix "sosa" ; sh:namespace "http://www.w3.org/ns/sosa/"^^xsd:anyURI ] ;
+  sh:declare [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] ;
+  sh:declare [ sh:prefix "xsd" ; sh:namespace "http://www.w3.org/2001/XMLSchema#"^^xsd:anyURI ] .
+
+# Q1, Q3, Q4, Q5 — observation completeness
+ggq:Q1_ResultShape a sh:NodeShape ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [
+    sh:path sosa:hasSimpleResult ;
+    sh:datatype xsd:float ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:message "Q1: observation must have exactly one float result value." ;
+  ] .
+
+ggq:Q3_FoiShape a sh:NodeShape ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [
+    sh:path sosa:hasFeatureOfInterest ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ;
+    sh:message "Q3: feature of interest must be an IRI." ;
+  ] .
+
+ggq:Q4_PlatformShape a sh:NodeShape ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [
+    sh:path cmpo:madeOnPlatform ;
+    sh:minCount 1 ;
+    sh:message "Q4: observation must be linked to at least one platform." ;
+  ] .
+
+ggq:Q5_TimeShape a sh:NodeShape ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [
+    sh:path cmpo:rawTimestamp ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:message "Q5a: observation must have exactly one raw timestamp." ;
+  ] ;
+  sh:property [
+    sh:path sosa:resultTime ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:message "Q5b: observation must have exactly one result time." ;
+  ] .
+
+# Q2 — observed property declared in the CMPO parameter hierarchy
+ggq:Q2_DeclaredPropertyShape a sh:NodeShape ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:sparql [
+    sh:message "Q2: observed property is not declared under cmpo:CMPParameter." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this sosa:observedProperty ?value .
+        FILTER NOT EXISTS { ?value rdfs:subClassOf* cmpo:CMPParameter }
+      }""" ;
+  ] .
+
+# Q6 — raw timestamp non-negative and inside the frozen campaign range
+ggq:Q6_TimestampRangeShape a sh:NodeShape ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:sparql [
+    sh:message "Q6: raw timestamp negative or outside the campaign range." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this cmpo:rawTimestamp ?value .
+        FILTER (?value < 0 || ?value < 481638013.333 || ?value > 481671691.0)
+      }""" ;
+  ] .
+
+# Q7 — wafer identifier: exactly one, and unique
+ggq:Q7_WaferIdShape a sh:NodeShape ;
+  sh:targetClass cmpo:Wafer ;
+  sh:property [
+    sh:path cmpo:hasWaferId ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:message "Q7a: wafer must have exactly one wafer identifier." ;
+  ] ;
+  sh:sparql [
+    sh:message "Q7b: two wafers share the same identifier." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this cmpo:hasWaferId ?value .
+        ?other cmpo:hasWaferId ?value .
+        FILTER (?other != $this)
+      }""" ;
+  ] .
+
+# Q8 — polishing step stage label
+ggq:Q8_StageLabelShape a sh:NodeShape ;
+  sh:targetClass cmpo:PolishingStep ;
+  sh:property [
+    sh:path cmpo:stageLabel ;
+    sh:minCount 1 ;
+    sh:message "Q8: polishing step has no stage label." ;
+  ] .
+
+# Q9 — tool identifier
+ggq:Q9_ToolIdShape a sh:NodeShape ;
+  sh:targetClass cmpo:Tool ;
+  sh:property [
+    sh:path cmpo:toolId ;
+    sh:minCount 1 ;
+    sh:message "Q9: tool has no tool identifier." ;
+  ] .
+
+# Q10 — chamber number
+ggq:Q10_ChamberNumberShape a sh:NodeShape ;
+  sh:targetClass cmpo:Chamber ;
+  sh:property [
+    sh:path cmpo:chamberNumber ;
+    sh:datatype xsd:integer ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:message "Q10: chamber must have exactly one chamber number." ;
+  ] .
+
+# Q11 — pressure zone position
+ggq:Q11_ZonePositionShape a sh:NodeShape ;
+  sh:targetClass cmpo:PressureZone ;
+  sh:property [
+    sh:path cmpo:zonePosition ;
+    sh:minCount 1 ;
+    sh:message "Q11: pressure zone has no zone position." ;
+  ] .
+
+# Q12 — dimensioned quantities non-negative (pressures, rotation speeds,
+# slurry flows, usage counters, removal rates; ZetaPotential and other
+# slurry-chemistry values are legitimately negative and are not targeted)
+ggq:Q12_NonNegativeShape a sh:NodeShape ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:sparql [
+    sh:message "Q12: dimensioned quantity has a negative value." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this sosa:observedProperty ?p ; sosa:hasSimpleResult ?value .
+        FILTER (?value < 0)
+        FILTER EXISTS {
+          VALUES ?family { cmpo:Pressure cmpo:Velocity cmpo:SlurryFlowRate
+                           cmpo:UsageParameter cmpo:MaterialRemovalRate
+                           cmpo:DresserUsage }
+          ?p rdfs:subClassOf* ?family .
+        }
+      }""" ;
+  ] .
+
+# Q13, Q14 — SPC limits
+ggq:Q13_ControlBandShape a sh:NodeShape ;
+  sh:targetClass cmpo:SPCLimit ;
+  sh:sparql [
+    sh:message "Q13: upper control limit is not strictly greater than the lower control limit." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:upperControlLimit ?ucl ; cmpo:lowerControlLimit ?lcl .
+        FILTER (?ucl <= ?lcl)
+      }""" ;
+  ] .
+
+ggq:Q14_BandNestingShape a sh:NodeShape ;
+  sh:targetClass cmpo:SPCLimit ;
+  sh:sparql [
+    sh:message "Q14: control band is not inside the specification band." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:upperControlLimit ?ucl ; cmpo:lowerControlLimit ?lcl ;
+              cmpo:upperSpecLimit ?usl ; cmpo:lowerSpecLimit ?lsl .
+        FILTER (?lcl < ?lsl || ?ucl > ?usl)
+      }""" ;
+  ] .
+
+# Q15 — process window
+ggq:Q15_ProcessWindowShape a sh:NodeShape ;
+  sh:targetClass cmpo:ProcessWindow ;
+  sh:sparql [
+    sh:message "Q15: process window maximum is not strictly greater than its minimum." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:windowMaxValue ?max ; cmpo:windowMinValue ?min .
+        FILTER (?max <= ?min)
+      }""" ;
+  ] .
+
+# Q16 — lot size positive and not exceeded by linked wafers
+ggq:Q16_LotShape a sh:NodeShape ;
+  sh:targetClass cmpo:Lot ;
+  sh:property [
+    sh:path cmpo:lotSize ;
+    sh:datatype xsd:integer ;
+    sh:minInclusive 1 ;
+    sh:minCount 1 ;
+    sh:message "Q16a: lot must have a positive integer lot size." ;
+  ] ;
+  sh:sparql [
+    sh:message "Q16b: more wafers linked to the lot than its declared size." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:lotSize ?n .
+        { SELECT $this (COUNT(?w) AS ?c) WHERE { ?w cmpo:isPartOfLot $this } GROUP BY $this }
+        FILTER (?c > ?n)
+      }""" ;
+  ] .
+
+# Q17 — wafer diameter from the standard set (numeric comparison, so the
+# check is robust against literal datatype differences)
+ggq:Q17_DiameterShape a sh:NodeShape ;
+  sh:targetSubjectsOf cmpo:diameter ;
+  sh:sparql [
+    sh:message "Q17: wafer diameter is not one of 100, 150, 200, 300 mm." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this cmpo:diameter ?value .
+        FILTER (?value != 100 && ?value != 150 && ?value != 200 && ?value != 300)
+      }""" ;
+  ] .
+
+# Q18 — edge exclusion non-negative and smaller than half the diameter
+ggq:Q18_EdgeExclusionShape a sh:NodeShape ;
+  sh:targetSubjectsOf cmpo:edgeExclusion ;
+  sh:sparql [
+    sh:message "Q18: edge exclusion negative or not smaller than half the wafer diameter." ;
+    sh:prefixes ggq: ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this cmpo:edgeExclusion ?value .
+        OPTIONAL { $this cmpo:diameter ?d }
+        FILTER (?value < 0 || (BOUND(?d) && ?value >= ?d / 2))
+      }""" ;
+  ] .
+
+# Q19 — groove geometry non-negative; a pad stating a groove pattern must
+# also state its pad type
+ggq:Q19a_GrooveDepthShape a sh:NodeShape ;
+  sh:targetSubjectsOf cmpo:grooveDepth ;
+  sh:property [
+    sh:path cmpo:grooveDepth ;
+    sh:minInclusive 0 ;
+    sh:message "Q19a: groove depth is negative." ;
+  ] .
+
+ggq:Q19b_GrooveWidthShape a sh:NodeShape ;
+  sh:targetSubjectsOf cmpo:grooveWidth ;
+  sh:property [
+    sh:path cmpo:grooveWidth ;
+    sh:minInclusive 0 ;
+    sh:message "Q19b: groove width is negative." ;
+  ] .
+
+ggq:Q19c_PadTypeShape a sh:NodeShape ;
+  sh:targetSubjectsOf cmpo:hasGroovePattern ;
+  sh:property [
+    sh:path cmpo:padType ;
+    sh:minCount 1 ;
+    sh:message "Q19c: pad states a groove pattern but no pad type." ;
+  ] .
+
+# Q20 — Preston coefficient and selectivity strictly positive
+ggq:Q20a_PrestonShape a sh:NodeShape ;
+  sh:targetSubjectsOf cmpo:prestonCoefficient ;
+  sh:property [
+    sh:path cmpo:prestonCoefficient ;
+    sh:minExclusive 0 ;
+    sh:message "Q20a: Preston coefficient is not strictly positive." ;
+  ] .
+
+ggq:Q20b_SelectivityShape a sh:NodeShape ;
+  sh:targetSubjectsOf cmpo:selectivityRatio ;
+  sh:property [
+    sh:path cmpo:selectivityRatio ;
+    sh:minExclusive 0 ;
+    sh:message "Q20b: selectivity ratio is not strictly positive." ;
+  ] .

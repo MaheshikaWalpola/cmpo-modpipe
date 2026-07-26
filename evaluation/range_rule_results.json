@@ -1,0 +1,59 @@
+{
+  "clean_sanity_R7_violations": 0,
+  "bounds_properties": 34,
+  "pythonhashseed": "0",
+  "E2_with_R7": {
+    "T1_missing_value": {
+      "seeded": 50,
+      "tier1": 50,
+      "tier12": 50,
+      "tier12r7": 50
+    },
+    "T2_datatype": {
+      "seeded": 50,
+      "tier1": 50,
+      "tier12": 50,
+      "tier12r7": 50
+    },
+    "T3_negative_value": {
+      "seeded": 50,
+      "tier1": 0,
+      "tier12": 50,
+      "tier12r7": 50
+    },
+    "T4_dangling_foi": {
+      "seeded": 50,
+      "tier1": 50,
+      "tier12": 50,
+      "tier12r7": 50
+    },
+    "T5_plausible_swap": {
+      "seeded": 100,
+      "seeded_outside_bounds": 23,
+      "seeded_zero_values": 28,
+      "tier1": 0,
+      "tier12": 0,
+      "tier12r7": 23
+    },
+    "T6_undeclared_property": {
+      "seeded": 50,
+      "tier1": 0,
+      "tier12": 50,
+      "tier12r7": 50
+    },
+    "T7_unit_scale": {
+      "seeded": 50,
+      "seeded_outside_bounds": 25,
+      "seeded_zero_values": 20,
+      "tier1": 0,
+      "tier12": 0,
+      "tier12r7": 25
+    },
+    "T8_duplicate_wafer": {
+      "seeded": 4,
+      "tier1": 0,
+      "tier12": 4,
+      "tier12r7": 4
+    }
+  }
+}

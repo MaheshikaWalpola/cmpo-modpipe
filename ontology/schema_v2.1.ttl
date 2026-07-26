@@ -54,6 +54,15 @@
 ###      positions (sosa:observedProperty targets, cmpo:canonicalUnit subjects)
 ###      by OWL 2 class-individual punning. This is intentional.
 ###
+### CHANGELOG v2.1 (2026-07-25, version renumbering — no term added, removed or renamed):
+###  R1  Renumbered from 2.0.2 to 2.1. The 2.0.2 patch declared a new object
+###      property (cmpo:madeOnPlatform), which under semantic versioning is a
+###      minor change rather than a patch; the number now reflects that.
+###      Content is byte-for-byte the 2.0.2 content apart from this header,
+###      the versionInfo literal and the modified date. Files, knowledge graph
+###      and repository tag are renamed to v2.1 to keep one version number
+###      across every artifact.
+###
 ### CHANGELOG v2.0.2 (2026-07-23, patch):
 ###  P5  cmpo:madeOnPlatform declared as an owl:ObjectProperty. The property
 ###      was used by the pipeline and documented in the header comments but
@@ -67,8 +76,8 @@
 <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo> a owl:Ontology ;
     rdfs:label "CMP Process Ontology (CMPO)"@en ;
     rdfs:comment "Domain ontology for Chemical-Mechanical Planarization (CMP) process data, aligned with the W3C SOSA/SSN sensor-observation standard. Models wafers, tools, tool components, consumables, process steps, recipes and observable process parameters for industrial CMP knowledge graphs, including the PHM 2016 Data Challenge dataset."@en ;
-    owl:versionInfo "2.0.2 (frozen; patch of 2.0, see changelog)" ;
-    dcterms:modified "2026-07-23"^^xsd:date ;
+    owl:versionInfo "2.1 (frozen; see changelog)" ;
+    dcterms:modified "2026-07-25"^^xsd:date ;
     dcterms:creator "Maheshika Hansamalee Walpola, Professorship VSR, TU Chemnitz" ;
     dcterms:created "2026-07-08"^^xsd:date ;
     rdfs:seeAlso <http://www.w3.org/ns/sosa/> .

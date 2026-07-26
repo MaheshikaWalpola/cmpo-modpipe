@@ -14,8 +14,8 @@ spec = importlib.util.spec_from_file_location("ev", _find("modpipe/evaluate_v2.p
 ev = importlib.util.module_from_spec(spec); spec.loader.exec_module(ev)
 from rdflib import Graph
 
-ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
-kg = Graph(); kg.parse(_find("kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
+ont = Graph(); ont.parse(_find("ontology/schema_v2.1.ttl", "schema_v2.1.ttl", "ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
+kg = Graph(); kg.parse(_find("kg/kg_cmpo_v2.1.ttl", "kg_cmpo_v21.ttl", "kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
 out = {}
 for seed in [7, 123]:
     t0 = time.time()

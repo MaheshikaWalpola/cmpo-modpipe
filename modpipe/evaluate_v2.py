@@ -34,8 +34,8 @@ def _find(*cands):
     raise FileNotFoundError("none of: " + ", ".join(cands) + " -- run from the repository root")
 
 def load():
-    ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
-    kg = Graph(); kg.parse(_find("modpipe/out/kg_unvalidated.ttl", "out/kg_unvalidated.ttl", "kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
+    ont = Graph(); ont.parse(_find("ontology/schema_v2.1.ttl", "schema_v2.1.ttl", "ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
+    kg = Graph(); kg.parse(_find("modpipe/out/kg_unvalidated.ttl", "out/kg_unvalidated.ttl", "kg/kg_cmpo_v2.1.ttl", "kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
     core = Graph(); core.parse(_find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle")
     both = Graph(); both.parse(_find("shapes/shapes_core.ttl", "shapes_core.ttl"), format="turtle"); both.parse(_find("shapes/shapes_sparql.ttl", "shapes_sparql.ttl"), format="turtle")
     return ont, kg, core, both

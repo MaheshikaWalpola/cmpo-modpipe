@@ -67,8 +67,8 @@ def type_closure(g, ont):
 
 def main():
     t0 = time.time()
-    ont = Graph(); ont.parse(_find("ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
-    kg = Graph(); kg.parse(_find("kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
+    ont = Graph(); ont.parse(_find("ontology/schema_v2.1.ttl", "schema_v2.1.ttl", "ontology/cmpo-v2.0.2.ttl", "cmpo-v2.0.2.ttl"), format="turtle")
+    kg = Graph(); kg.parse(_find("kg/kg_cmpo_v2.1.ttl", "kg_cmpo_v21.ttl", "kg/kg_cmpo_v2.0.2.ttl", "kg_cmpo_v202.ttl"), format="turtle")
     # SOSA-SHACL suite: git clone https://github.com/KnowWhereGraph/KWG-SHACL in the repo root
     sosa_shapes = Graph(); sosa_shapes.parse(_find("KWG-SHACL/shacl_sosa.ttl", "shapes/shacl_sosa_external.ttl"), format="turtle")
     # Minimal mechanical repair: the published suite wraps four sh:or lists in
