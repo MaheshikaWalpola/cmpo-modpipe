@@ -1,0 +1,66 @@
+@prefix cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex:   <http://example.org/probe#> .
+
+# Q1 no result value        Q3 FoI is a literal        Q4 no platform        Q5 two raw timestamps
+ex:obsQ1 a cmpo:CMPObservation ; sosa:observedProperty cmpo:CenterAirBagPressure ;
+   sosa:hasFeatureOfInterest ex:w0 ; cmpo:madeOnPlatform ex:t0 ;
+   cmpo:rawTimestamp 481638020.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+ex:obsQ3 a cmpo:CMPObservation ; sosa:observedProperty cmpo:CenterAirBagPressure ;
+   sosa:hasSimpleResult "1.0"^^xsd:float ; sosa:hasFeatureOfInterest "not-an-iri" ;
+   cmpo:madeOnPlatform ex:t0 ; cmpo:rawTimestamp 481638020.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+ex:obsQ4 a cmpo:CMPObservation ; sosa:observedProperty cmpo:CenterAirBagPressure ;
+   sosa:hasSimpleResult "1.0"^^xsd:float ; sosa:hasFeatureOfInterest ex:w0 ;
+   cmpo:rawTimestamp 481638020.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+ex:obsQ5 a cmpo:CMPObservation ; sosa:observedProperty cmpo:CenterAirBagPressure ;
+   sosa:hasSimpleResult "1.0"^^xsd:float ; sosa:hasFeatureOfInterest ex:w0 ; cmpo:madeOnPlatform ex:t0 ;
+   cmpo:rawTimestamp 481638020.0 , 481638021.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+# Q2 undeclared observed property
+ex:obsQ2 a cmpo:CMPObservation ; sosa:observedProperty cmpo:CentreAirBagPresure ;
+   sosa:hasSimpleResult "1.0"^^xsd:float ; sosa:hasFeatureOfInterest ex:w0 ; cmpo:madeOnPlatform ex:t0 ;
+   cmpo:rawTimestamp 481638020.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+# Q6 timestamp outside campaign range
+ex:obsQ6 a cmpo:CMPObservation ; sosa:observedProperty cmpo:CenterAirBagPressure ;
+   sosa:hasSimpleResult "1.0"^^xsd:float ; sosa:hasFeatureOfInterest ex:w0 ; cmpo:madeOnPlatform ex:t0 ;
+   cmpo:rawTimestamp 999999999.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+# Q12 negative pressure
+ex:obsQ12 a cmpo:CMPObservation ; sosa:observedProperty cmpo:CenterAirBagPressure ;
+   sosa:hasSimpleResult "-5.0"^^xsd:float ; sosa:hasFeatureOfInterest ex:w0 ; cmpo:madeOnPlatform ex:t0 ;
+   cmpo:rawTimestamp 481638020.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+# Q12 control: negative zeta potential must NOT fire
+ex:obsQ12ok a cmpo:CMPObservation ; sosa:observedProperty cmpo:ZetaPotential ;
+   sosa:hasSimpleResult "-35.0"^^xsd:float ; sosa:hasFeatureOfInterest ex:w0 ; cmpo:madeOnPlatform ex:t0 ;
+   cmpo:rawTimestamp 481638020.0 ; sosa:resultTime "2020-01-01T00:00:00Z"^^xsd:dateTime .
+ex:w0 a cmpo:Wafer ; cmpo:hasWaferId "W-000" .
+ex:t0 a cmpo:Tool ; cmpo:toolId "T-000" .
+# Q7 two wafers sharing an id
+ex:wA a cmpo:Wafer ; cmpo:hasWaferId "W-DUP" .
+ex:wB a cmpo:Wafer ; cmpo:hasWaferId "W-DUP" .
+# Q8 step with no stage label
+ex:stepQ8 a cmpo:PolishingStep .
+# Q9 tool with no tool id
+ex:toolQ9 a cmpo:Tool .
+# Q10 chamber with no number
+ex:chQ10 a cmpo:Chamber .
+# Q11 pressure zone with no position
+ex:pzQ11 a cmpo:CenterAirBagZone .
+# Q13 upper <= lower ; Q14 control band outside spec band
+ex:spcQ13 a cmpo:SPCLimit ; cmpo:upperControlLimit "10.0"^^xsd:float ; cmpo:lowerControlLimit "90.0"^^xsd:float .
+ex:spcQ14 a cmpo:SPCLimit ; cmpo:upperControlLimit "99.0"^^xsd:float ; cmpo:lowerControlLimit "1.0"^^xsd:float ;
+   cmpo:upperSpecLimit "50.0"^^xsd:float ; cmpo:lowerSpecLimit "10.0"^^xsd:float .
+# Q15 window max <= min
+ex:pwQ15 a cmpo:ProcessWindow ; cmpo:windowMaxValue "1.0"^^xsd:float ; cmpo:windowMinValue "9.0"^^xsd:float .
+# Q16 lot size 1 but two wafers linked
+ex:lotQ16 a cmpo:Lot ; cmpo:lotSize 1 .
+ex:wl1 a cmpo:Wafer ; cmpo:hasWaferId "L1" ; cmpo:isPartOfLot ex:lotQ16 .
+ex:wl2 a cmpo:Wafer ; cmpo:hasWaferId "L2" ; cmpo:isPartOfLot ex:lotQ16 .
+# Q17 non-standard diameter ; Q18 edge exclusion >= half diameter
+ex:wQ17 a cmpo:Wafer ; cmpo:hasWaferId "W-17" ; cmpo:diameter 175 .
+ex:wQ18 a cmpo:Wafer ; cmpo:hasWaferId "W-18" ; cmpo:diameter 300 ; cmpo:edgeExclusion 200 .
+# Q19 negative groove depth / width ; pad with pattern but no type
+ex:padQ19 a cmpo:PolishingPad ; cmpo:grooveDepth "-1.0"^^xsd:float ; cmpo:grooveWidth "-2.0"^^xsd:float ;
+   cmpo:hasGroovePattern "XY" .
+# Q20 non-positive Preston coefficient and selectivity
+ex:prQ20 a cmpo:PrestonModel ; cmpo:prestonCoefficient "0.0"^^xsd:float .
+ex:msQ20 a cmpo:MaterialSelectivity ; cmpo:selectivityRatio "-1.0"^^xsd:float .

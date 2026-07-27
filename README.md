@@ -3,8 +3,8 @@
 The CMP Process Ontology (CMPO) and ModPipe, a modular pipeline that turns
 chemical mechanical planarization (CMP) process tables into a SHACL-validated
 knowledge graph. This repository is the artifact accompanying the paper
-*"From Silos to Semantics: CMPO and a Validated Knowledge Graph for Chemical
-Mechanical Planarization Process Data"* (submitted to SemIIM 2026,
+*"From Silos to Semantics: Building and Evaluating a Validated Knowledge Graph
+Pipeline for Chemical Mechanical Planarization"* (submitted to SemIIM 2026,
 co-located with ISWC 2026).
 
 ## Contents
@@ -18,7 +18,8 @@ co-located with ISWC 2026).
 | `shapes/` | The two-tier validation gate: `shapes_core.ttl` (node-local core constraints) and `shapes_sparql.ttl` (graph-level semantic rules) |
 | `kg/` | The generated knowledge graph (252,873 triples; derived from the PHM 2016 test data plus the synthetic sample) |
 | `evaluation/` | Raw results of the paper's experiments (`results_v2.json`), generation statistics, and source-data profile |
-| `legacy_audit/` | The E0 audit of an earlier deployment (runs against the [KGPortal](https://github.com/MaheshikaWalpola/KGPortal) repository; see below) |
+| `legacy_audit/` | The E0 audit of an earlier deployment (runs against the [KGPortal](https://github.com/MaheshikaWalpola/KGPortal) repository at commit `0a79c0d`; see below) |
+| `portal_study/` | The E4 compilation study: twenty validation statements, three portal-generated SHACL suites, a corrected and a hand-written suite, and the injection-test harness that scores them |
 | `data/` | Empty by design; place the PHM 2016 CSVs here (see next section) |
 | `docs/` | Notes on data scope (`DATA_SUFFICIENCY.md`) and on reading the evaluation scripts and results (`EVALUATION_NOTES.md`) |
 
@@ -60,8 +61,8 @@ seed, so the detection table reproduces exactly.
 The legacy audit (`legacy_audit/run_evaluation.py`) documents the E0
 experiment of the paper: it validates the artifacts of an earlier deployment
 and measures the vacuity of its shape suite. To run it, clone
-[KGPortal](https://github.com/MaheshikaWalpola/KGPortal) and execute the
-script from that repository's root; the committed `results.json` is the run
+[KGPortal](https://github.com/MaheshikaWalpola/KGPortal) at commit `0a79c0d`
+and execute the script from that repository's root; the committed `results.json` is the run
 reported in the paper.
 
 ## Versioning
@@ -73,10 +74,11 @@ version reported in the SemIIM 2026 paper is `v2.1`. The full history,
 including the pre-release Schema v1 and v2.0 stages, is in `CHANGELOG.md`; how
 the ontology was built is in `CONSTRUCTION_HISTORY.md`.
 
-Tagged states are frozen: nothing under a released tag is ever edited.
-Post-submission work happens on the `camera-ready/extensions` branch and is
-merged and tagged (next: `v2.2`) only when a revised paper cites it. The
-extension experiments and their status are listed in `evaluation/README.md`.
+Tagged states are frozen: nothing under a released tag is ever edited; a new
+version is always a new tag. `v2.2` is the state cited by the SemIIM 2026
+paper. It changes documentation, repository structure and the portal study
+only: the ontology and the knowledge graph are byte-identical to `v2.1`, so
+every detection count and every competency-question answer is unchanged.
 
 ## Licenses
 

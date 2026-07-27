@@ -1,0 +1,417 @@
+{
+  "probe_triples": 1530,
+  "suites": {
+    "run1_portal_generated": {
+      "file": "portal_study/runs/run1_portal_generated.ttl",
+      "node_shapes": 16,
+      "statements_with_a_shape": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        17,
+        20
+      ],
+      "modes": {
+        "advanced_True": {
+          "advanced": true,
+          "loads": true,
+          "conforms": false,
+          "results": 20,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            8,
+            9,
+            10,
+            11,
+            12,
+            17,
+            20
+          ],
+          "enforced_count": 11,
+          "inert": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "absent": [
+            15,
+            16,
+            18,
+            19
+          ],
+          "false_positive_control_nodes": [
+            "obsQ12ok"
+          ]
+        },
+        "advanced_False": {
+          "advanced": false,
+          "loads": true,
+          "conforms": false,
+          "results": 20,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            8,
+            9,
+            10,
+            11,
+            12,
+            17,
+            20
+          ],
+          "enforced_count": 11,
+          "inert": [
+            5,
+            6,
+            7,
+            13,
+            14
+          ],
+          "absent": [
+            15,
+            16,
+            18,
+            19
+          ],
+          "false_positive_control_nodes": [
+            "obsQ12ok"
+          ]
+        }
+      }
+    },
+    "run2_portal_generated": {
+      "file": "portal_study/runs/run2_portal_generated.ttl",
+      "node_shapes": 17,
+      "statements_with_a_shape": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20
+      ],
+      "modes": {
+        "advanced_True": {
+          "advanced": true,
+          "loads": false,
+          "error": "when using sh:rule, the Rule must be defined as either a TripleRule or SPARQLRule."
+        },
+        "advanced_False": {
+          "advanced": false,
+          "loads": true,
+          "conforms": false,
+          "results": 21,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            17,
+            19,
+            20
+          ],
+          "enforced_count": 13,
+          "inert": [
+            7,
+            14,
+            15,
+            16
+          ],
+          "absent": [
+            6,
+            13,
+            18
+          ],
+          "false_positive_control_nodes": [
+            "obsQ12ok"
+          ]
+        }
+      }
+    },
+    "run3_portal_generated": {
+      "file": "portal_study/runs/run3_portal_generated.ttl",
+      "node_shapes": 17,
+      "statements_with_a_shape": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        14,
+        15,
+        16,
+        17,
+        19,
+        20
+      ],
+      "modes": {
+        "advanced_True": {
+          "advanced": true,
+          "loads": false,
+          "error": "when using sh:rule, the Rule must be defined as either a TripleRule or SPARQLRule."
+        },
+        "advanced_False": {
+          "advanced": false,
+          "loads": true,
+          "conforms": false,
+          "results": 21,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            17,
+            19,
+            20
+          ],
+          "enforced_count": 13,
+          "inert": [
+            7,
+            14,
+            15,
+            16
+          ],
+          "absent": [
+            6,
+            13,
+            18
+          ],
+          "false_positive_control_nodes": [
+            "obsQ12ok"
+          ]
+        }
+      }
+    },
+    "shapes_corrected": {
+      "file": "portal_study/shapes_corrected.ttl",
+      "node_shapes": 22,
+      "statements_with_a_shape": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "modes": {
+        "advanced_True": {
+          "advanced": true,
+          "loads": true,
+          "conforms": false,
+          "results": 24,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "enforced_count": 20,
+          "inert": [],
+          "absent": [],
+          "false_positive_control_nodes": []
+        },
+        "advanced_False": {
+          "advanced": false,
+          "loads": true,
+          "conforms": false,
+          "results": 24,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "enforced_count": 20,
+          "inert": [],
+          "absent": [],
+          "false_positive_control_nodes": []
+        }
+      }
+    },
+    "shapes_handwritten": {
+      "file": "portal_study/shapes_handwritten.ttl",
+      "node_shapes": 23,
+      "statements_with_a_shape": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "modes": {
+        "advanced_True": {
+          "advanced": true,
+          "loads": true,
+          "conforms": false,
+          "results": 24,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "enforced_count": 20,
+          "inert": [],
+          "absent": [],
+          "false_positive_control_nodes": []
+        },
+        "advanced_False": {
+          "advanced": false,
+          "loads": true,
+          "conforms": false,
+          "results": 24,
+          "enforced": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "enforced_count": 20,
+          "inert": [],
+          "absent": [],
+          "false_positive_control_nodes": []
+        }
+      }
+    }
+  }
+}

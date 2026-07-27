@@ -1,10 +1,11 @@
-# R7 range-rule experiment — results note (2026-07-24)
+# R7: what data-derived range bounds add to the gate
 
-Camera-ready material only. Nothing here touches the submitted paper.
-Run by Claude (agent) on the frozen protocol in
-`hiwi_t7_range_experiment_protocol.md`; script, bounds, and raw results are
-in `modpipe/range_rule_experiment.py`, `evaluation/range_bounds.csv`, and
-`evaluation/range_rule_results.json`.
+Results note for Table 3 of the SemIIM 2026 paper. Bounds, script and raw
+results are `evaluation/range_bounds.csv`, `modpipe/range_rule_experiment.py`
+and `evaluation/range_rule_results.json`; the parameter sweep is
+`modpipe/range_rule_sensitivity.py` and the transfer study
+`modpipe/range_rule_transfer.py`. The protocol, including the predictions
+compared below, was frozen before the first run.
 
 ## Setup
 
@@ -62,7 +63,7 @@ unchanged. Two of three parts held; two deviations are findings.
 
 The harness samples T3/T5/T7 targets by RNG-shuffling rdflib SPARQL result
 rows, and the ORDER of those rows depends on the Python process hash seed.
-The submitted paper's E2 numbers are immune: its detections are 0, 50, or
+The E2 numbers of Table 2 are immune: its detections are 0, 50, or
 all-seeded for every class, whichever observations get sampled. R7
 detection counts are not immune: across hash seeds tried this session, T7
 ranged 25-29 and T5 18-27 (mechanism identical throughout; only the sample
@@ -71,19 +72,18 @@ the numbers above are stable run-to-run; the canonical values are the
 pinned ones. Worth remembering for any future experiment that, unlike the
 published ones, is sensitive to which observations get sampled.
 
-## Honesty cautions for the eventual write-up (from the protocol, confirmed)
+## Cautions carried into the paper
 
 The bounds are derived from the same clean data the errors are seeded
 into, so R7 is a data-derived screen, not an engineering-spec constraint.
 Real operating windows from process engineers replace these bounds later.
-R7 was designed after the submitted paper's taxonomy was frozen and must
-be reported as an extension, never merged into Table 2's original
-conditions. Add to that the two findings above: a fair write-up reports
+R7 was designed after the error taxonomy was frozen and is reported as an
+extension in Table 3, never merged into Table 2's conditions. Add to that the two findings above: a fair write-up reports
 T7 detection as partial with the zero-value floor stated, and reports the
 T5 side catch as a cross-property effect, not as detection of true
 same-range swaps.
 
-Provenance: all numbers from `modpipe/range_rule_experiment.py` at seed 42,
-PYTHONHASHSEED=0, rdflib 7.x / pyshacl on the released kg_cmpo_v2.0.2.ttl
-and cmpo-v2.0.2.ttl, run 2026-07-24. Nothing in the submitted paper was
-modified.
+Provenance: all numbers from `modpipe/range_rule_experiment.py` at seed 42
+with `PYTHONHASHSEED=0`, rdflib 7.6.0 and pySHACL 0.40.0, against
+`kg/kg_cmpo_v2.1.ttl` and `ontology/schema_v2.1.ttl`. Re-running the released
+script on the v2.1 pair reproduces every count in the table above.

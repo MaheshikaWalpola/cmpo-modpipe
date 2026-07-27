@@ -1,0 +1,60 @@
+@prefix cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#> .
+@prefix inst: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+inst:Question_10_Shape a sh:NodeShape ;
+    sh:property [ sh:message "Q10" ; sh:minCount 1 ; sh:path cmpo:chamberNumber ] ;
+    sh:targetClass cmpo:Chamber .
+inst:Question_11_Shape a sh:NodeShape ;
+    sh:property [ sh:message "Q11" ; sh:minCount 1 ; sh:path cmpo:zonePosition ] ;
+    sh:targetClass cmpo:PressureZone .
+inst:Question_12_Shape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:float ; sh:message "Q12" ; sh:minInclusive 0.0 ; sh:path sosa:hasSimpleResult ] ;
+    sh:targetClass cmpo:CMPObservation .
+inst:Question_13_Shape a sh:NodeShape ;
+    sh:node [ sh:message "Q13" ; sh:select """
+        SELECT $this WHERE { $this cmpo:upperControlLimit $upper . $this cmpo:lowerControlLimit $lower . FILTER($upper <= $lower) }""" ] ;
+    sh:property [ sh:datatype xsd:float ; sh:message "Q13-ucl-float" ; sh:path cmpo:upperControlLimit ],
+        [ sh:datatype xsd:float ; sh:message "Q13-lcl-float" ; sh:path cmpo:lowerControlLimit ] ;
+    sh:targetClass cmpo:SPCLimit .
+inst:Question_14_Shape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:float ; sh:message "Q14" ; sh:minInclusive 0.0 ; sh:path cmpo:lowerControlLimit ],
+        [ sh:datatype xsd:float ; sh:maxInclusive 100.0 ; sh:message "Q14" ; sh:path cmpo:upperControlLimit ] ;
+    sh:targetClass cmpo:SPCLimit .
+inst:Question_17_Shape a sh:NodeShape ;
+    sh:property [ sh:in ( 100 150 200 300 ) ; sh:message "Q17" ; sh:path cmpo:diameter ] ;
+    sh:targetClass cmpo:Wafer .
+inst:Question_1_Shape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:float ; sh:maxCount 1 ; sh:message "Q1" ; sh:minCount 1 ; sh:path sosa:hasSimpleResult ] ;
+    sh:targetClass cmpo:CMPObservation .
+inst:Question_20_Shape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:float ; sh:message "Q20a" ; sh:minExclusive 0.0 ; sh:path cmpo:prestonCoefficient ],
+        [ sh:datatype xsd:float ; sh:message "Q20b" ; sh:minExclusive 0.0 ; sh:path cmpo:selectivityRatio ] ;
+    sh:targetClass cmpo:MaterialSelectivity, cmpo:PrestonModel .
+inst:Question_2_Shape a sh:NodeShape ;
+    sh:property [ sh:class cmpo:CMPParameter ; sh:message "Q2" ; sh:path sosa:observedProperty ] ;
+    sh:targetClass cmpo:CMPObservation .
+inst:Question_3_Shape a sh:NodeShape ;
+    sh:property [ sh:message "Q3" ; sh:nodeKind sh:IRI ; sh:path sosa:hasFeatureOfInterest ] ;
+    sh:targetClass cmpo:CMPObservation .
+inst:Question_4_Shape a sh:NodeShape ;
+    sh:property [ sh:message "Q4" ; sh:minCount 1 ; sh:path cmpo:madeOnPlatform ] ;
+    sh:targetClass cmpo:CMPObservation .
+inst:Question_5_Shape a sh:NodeShape ;
+    sh:property [ sh:count 1 ; sh:message "Q5a" ; sh:path cmpo:rawTimestamp ],
+        [ sh:count 1 ; sh:message "Q5b" ; sh:path sosa:resultTime ] ;
+    sh:targetClass cmpo:CMPObservation .
+inst:Question_6_Shape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:decimal ; sh:maxInclusive 2147483647 ; sh:message "Q6" ; sh:minInclusive 0 ; sh:path cmpo:rawTimestamp ] ;
+    sh:targetClass cmpo:CMPObservation .
+inst:Question_7_Shape a sh:NodeShape ;
+    sh:property [ sh:datatype xsd:string ; sh:maxCount 1 ; sh:message "Q7" ; sh:minCount 1 ; sh:path cmpo:hasWaferId ; sh:uniqueLiteral true ] ;
+    sh:targetClass cmpo:Wafer .
+inst:Question_8_Shape a sh:NodeShape ;
+    sh:property [ sh:message "Q8" ; sh:minCount 1 ; sh:path cmpo:stageLabel ] ;
+    sh:targetClass cmpo:PolishingStep .
+inst:Tool_Identifier_Shape a sh:NodeShape ;
+    sh:property [ sh:message "Q9" ; sh:minCount 1 ; sh:path cmpo:toolId ] ;
+    sh:targetClass cmpo:Tool .

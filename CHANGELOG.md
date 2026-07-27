@@ -6,21 +6,68 @@ artifact (git tags, e.g. `v2.1`). The two move together: a tagged repository
 state contains exactly one ontology version, the knowledge graph generated
 from it, and the evaluation results produced against that pair.
 
-## Unreleased (branch `camera-ready/extensions`)
+## v2.2 — 2026-07-28 (version reported in the SemIIM 2026 paper)
 
-Post-submission extension experiments; see `evaluation/README.md` for the
-per-file status. None of this changes the tagged v2.0.2 artifact.
+The ontology and the knowledge graph are byte-identical to v2.1, v2.1.1 and
+v2.1.2. No term was added, removed or renamed; no detection count and no
+competency-question answer changed. This release adds the portal compilation
+study, and tidies the repository so that every artifact the paper cites is
+reachable from this repository alone.
 
-- R7 data-derived range-rule pilot: frozen per-property bounds, seeded-error
-  rerun with a fourth condition (T7 25/50, T5 23/100, clean graph 0
-  violations), results note with preregistration comparison and the
-  Python-hash-seed reproducibility finding.
-- R7e preregistration draft and expert-limits template for the non-circular
-  rerun with expert-stated operating limits.
-- Graph-grounded 20-question suite: hand-written SHACL and SPARQL audit
-  versions, run against the released graph; all four preregistered firings
-  confirmed exactly, sixteen statements pass non-vacuously.
-- Repository housekeeping: `.gitignore`, `evaluation/README.md`.
+Added — `portal_study/`, the E4 compilation study:
+- `questions_20.md`, the twenty validation statements with the occurrence count
+  of every targeted class and constrained property, frozen before any run.
+- `runs/run1..run3_portal_generated.ttl`: three portal-generated SHACL suites
+  for those same twenty statements, verbatim.
+- `shapes_corrected.ttl` and `shapes_handwritten.ttl`: the same statements
+  after repair, and an independently hand-written suite.
+- `probe20.ttl` and `check_shapes.py`: an injection test that carries one
+  deliberate violation per statement and reports, per suite, which statements
+  actually enforce. The portal runs score 11, 13 and 13 of 20; two of the three
+  are rejected outright by a SHACL engine in advanced mode, because one
+  malformed `sh:rule` aborts the whole shapes graph. Both repaired suites score
+  20 of 20 with no false positives.
+- `sparql_audit.rq` and `RESULTS_handwritten_suite.md`: the same twenty checks
+  as standalone SPARQL, executed against the released graph. All four
+  pre-registered firings reproduce exactly (20, 4, 1, 3) and the other sixteen
+  statements pass non-vacuously.
+- `PROVENANCE.md`: the KGPortal and KGtest commits behind every artifact, with
+  the relevant generator source quoted in full, since KGtest is not public.
+
+Fixed:
+- `portal_study/shapes_handwritten.ttl` (previously
+  `evaluation/graph_grounded_shapes.ttl`) used `VALUES` inside a `sh:sparql`
+  constraint, which pySHACL does not accept there; on the injection probe the
+  committed version enforced none of the twenty statements. Rewritten with
+  `FILTER (?family IN (...))`, it enforces all twenty.
+- `portal_study/sparql_audit.rq` now uses `DISTINCT` and `COUNT(DISTINCT ...)`.
+  Without them, a repository that materializes the type closure reaches an
+  ancestor class by several routes at once, so a wafer with one identifier is
+  counted as having three and a correct graph reports violations. The counts
+  are now identical with and without materialization.
+
+- `SHA256SUMS` now also pins `modpipe/range_rule_sensitivity.py` and
+  `evaluation/range_rule_sensitivity.json`. Both files shipped in v2.1.2 but
+  their checksum lines were never committed, so the manifest did not in fact
+  pin every released artifact, which the paper's Resource Availability section
+  claims it does.
+
+Removed:
+- `evaluation/range_rule_expert_prereg.md` and
+  `evaluation/expert_limits_template.csv`. They described an experiment with
+  expert-stated operating limits that was never run, and shipped as unfilled
+  templates. The paper states the expert-limit rule as future work instead.
+
+Documentation:
+- `README.md` records the paper's title as submitted, pins the KGPortal commit
+  the E0 audit runs against, and drops the `camera-ready/extensions` branch
+  convention: work is released by tag, and tags are never rewritten.
+- `evaluation/README.md` and `evaluation/range_rule_note.md` rewritten. Both
+  previously carried stale version strings and described their own contents as
+  material outside the paper, which R7 no longer is: it is Table 3.
+
+The frozen tags `v2.0.2`, `v2.0.2.1`, `v2.1`, `v2.1.1` and `v2.1.2` are
+unchanged. Published tags are never rewritten.
 
 ## v2.1.2 — 2026-07-27 (artifact revision; version reported in the SemIIM 2026 paper)
 

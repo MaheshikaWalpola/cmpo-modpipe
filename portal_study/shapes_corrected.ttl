@@ -1,0 +1,211 @@
+@prefix cmpo: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#> .
+@prefix inst: <https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+inst:ShapesGraph a owl:Ontology ;
+  sh:declare [ sh:prefix "cmpo" ; sh:namespace "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#"^^xsd:anyURI ] ;
+  sh:declare [ sh:prefix "sosa" ; sh:namespace "http://www.w3.org/ns/sosa/"^^xsd:anyURI ] ;
+  sh:declare [ sh:prefix "rdfs" ; sh:namespace "http://www.w3.org/2000/01/rdf-schema#"^^xsd:anyURI ] .
+
+inst:Question_1_Shape a sh:NodeShape ;
+  rdfs:label "Every CMP observation must have exactly one numeric result value of type float." ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [ sh:path sosa:hasSimpleResult ; sh:datatype xsd:float ;
+                sh:minCount 1 ; sh:maxCount 1 ;
+                sh:message "Q1: observation must have exactly one float result value." ] .
+
+inst:Question_3_Shape a sh:NodeShape ;
+  rdfs:label "Every CMP observation's feature of interest must be an IRI, not a literal value." ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [ sh:path sosa:hasFeatureOfInterest ; sh:nodeKind sh:IRI ; sh:minCount 1 ;
+                sh:message "Q3: feature of interest must be an IRI." ] .
+
+inst:Question_4_Shape a sh:NodeShape ;
+  rdfs:label "Every CMP observation must be linked to at least one platform (tool or chamber)." ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [ sh:path cmpo:madeOnPlatform ; sh:minCount 1 ;
+                sh:message "Q4: observation must be linked to at least one platform." ] .
+
+inst:Question_8_Shape a sh:NodeShape ;
+  rdfs:label "Every polishing step must have a stage label." ;
+  sh:targetClass cmpo:PolishingStep ;
+  sh:property [ sh:path cmpo:stageLabel ; sh:minCount 1 ;
+                sh:message "Q8: polishing step has no stage label." ] .
+
+inst:Tool_Identifier_Shape a sh:NodeShape ;
+  rdfs:label "Every tool must have a tool identifier." ;
+  sh:targetClass cmpo:Tool ;
+  sh:property [ sh:path cmpo:toolId ; sh:minCount 1 ;
+                sh:message "Q9: tool has no tool identifier." ] .
+
+inst:Question_10_Shape a sh:NodeShape ;
+  rdfs:label "Every chamber must have a chamber number." ;
+  sh:targetClass cmpo:Chamber ;
+  sh:property [ sh:path cmpo:chamberNumber ; sh:minCount 1 ;
+                sh:message "Q10: chamber has no chamber number." ] .
+
+inst:Question_11_Shape a sh:NodeShape ;
+  rdfs:label "Every pressure zone of the carrier must state its zone position." ;
+  sh:targetClass cmpo:PressureZone ;
+  sh:property [ sh:path cmpo:zonePosition ; sh:minCount 1 ;
+                sh:message "Q11: pressure zone has no zone position." ] .
+
+inst:Question_20_Shape a sh:NodeShape ;
+  rdfs:label "Every Preston coefficient and every selectivity ratio must be strictly positive." ;
+  sh:targetClass cmpo:MaterialSelectivity, cmpo:PrestonModel ;
+  sh:property [ sh:path cmpo:prestonCoefficient ; sh:datatype xsd:float ; sh:minExclusive 0.0 ;
+                sh:message "Q20a: Preston coefficient is not strictly positive." ] ;
+  sh:property [ sh:path cmpo:selectivityRatio ; sh:datatype xsd:float ; sh:minExclusive 0.0 ;
+                sh:message "Q20b: selectivity ratio is not strictly positive." ] .
+
+inst:Question_2_Shape a sh:NodeShape ;
+  rdfs:label "Every CMP observation's observed property must be declared in the CMPO parameter hierarchy." ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:sparql [ sh:message "Q2: observed property is not declared under cmpo:CMPParameter." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this sosa:observedProperty ?value .
+        FILTER NOT EXISTS { ?value rdfs:subClassOf* cmpo:CMPParameter }
+      }""" ] .
+
+inst:Question_5_Shape a sh:NodeShape ;
+  rdfs:label "Every CMP observation must have exactly one raw timestamp and exactly one result time." ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [ sh:path cmpo:rawTimestamp ; sh:minCount 1 ; sh:maxCount 1 ;
+                sh:message "Q5a: observation must have exactly one raw timestamp." ] ;
+  sh:property [ sh:path sosa:resultTime ; sh:minCount 1 ; sh:maxCount 1 ;
+                sh:message "Q5b: observation must have exactly one result time." ] .
+
+inst:Question_6_Shape a sh:NodeShape ;
+  rdfs:label "Every raw timestamp must be non-negative and lie within the campaign's recorded time range." ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:property [ sh:path cmpo:rawTimestamp ; sh:datatype xsd:decimal ;
+                sh:minInclusive 481638013.333 ; sh:maxInclusive 481671691.0 ;
+                sh:message "Q6: raw timestamp negative or outside the campaign range." ] .
+
+inst:Question_7_Shape a sh:NodeShape ;
+  rdfs:label "Every wafer must have exactly one wafer identifier, and no two wafers may share an identifier." ;
+  sh:targetClass cmpo:Wafer ;
+  sh:property [ sh:path cmpo:hasWaferId ; sh:datatype xsd:string ;
+                sh:minCount 1 ; sh:maxCount 1 ;
+                sh:message "Q7a: wafer must have exactly one wafer identifier." ] ;
+  sh:sparql [ sh:message "Q7b: two wafers share the same identifier." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this cmpo:hasWaferId ?value .
+        ?other cmpo:hasWaferId ?value .
+        FILTER (?other != $this)
+      }""" ] .
+
+inst:Question_12_Shape a sh:NodeShape ;
+  rdfs:label "Every value of a physically dimensioned quantity must be non-negative." ;
+  sh:targetClass cmpo:CMPObservation ;
+  sh:sparql [ sh:message "Q12: dimensioned quantity has a negative value." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this sosa:observedProperty ?p ; sosa:hasSimpleResult ?value .
+        FILTER (?value < 0)
+        FILTER EXISTS {
+          ?p rdfs:subClassOf* ?family .
+          FILTER (?family IN (cmpo:Pressure, cmpo:Velocity, cmpo:SlurryFlowRate,
+                              cmpo:UsageParameter, cmpo:MaterialRemovalRate,
+                              cmpo:DresserUsage))
+        }
+      }""" ] .
+
+inst:Question_13_Shape a sh:NodeShape ;
+  rdfs:label "The upper control limit must be strictly greater than the lower control limit." ;
+  sh:targetClass cmpo:SPCLimit ;
+  sh:sparql [ sh:message "Q13: upper control limit is not strictly greater than the lower control limit." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:upperControlLimit ?ucl ; cmpo:lowerControlLimit ?lcl .
+        FILTER (?ucl <= ?lcl)
+      }""" ] .
+
+inst:Question_14_Shape a sh:NodeShape ;
+  rdfs:label "The control band must lie entirely inside the specification band." ;
+  sh:targetClass cmpo:SPCLimit ;
+  sh:sparql [ sh:message "Q14: control band is not inside the specification band." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:upperControlLimit ?ucl ; cmpo:lowerControlLimit ?lcl ;
+              cmpo:upperSpecLimit ?usl ; cmpo:lowerSpecLimit ?lsl .
+        FILTER (?lcl < ?lsl || ?ucl > ?usl)
+      }""" ] .
+
+inst:Question_17_Shape a sh:NodeShape ;
+  rdfs:label "Every wafer diameter must be one of the standard sizes 100, 150, 200, or 300 mm." ;
+  sh:targetSubjectsOf cmpo:diameter ;
+  sh:sparql [ sh:message "Q17: wafer diameter is not one of 100, 150, 200, 300 mm." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this cmpo:diameter ?value .
+        FILTER (?value != 100 && ?value != 150 && ?value != 200 && ?value != 300)
+      }""" ] .
+
+inst:Question_15_Shape a sh:NodeShape ;
+  rdfs:label "A process window's maximum value must be strictly greater than its minimum value." ;
+  sh:targetClass cmpo:ProcessWindow ;
+  sh:sparql [ sh:message "Q15: process window maximum is not strictly greater than its minimum." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:windowMaxValue ?max ; cmpo:windowMinValue ?min .
+        FILTER (?max <= ?min)
+      }""" ] .
+
+inst:Question_16_Shape a sh:NodeShape ;
+  rdfs:label "Every lot must have a positive lot size, and the number of wafers linked to the lot must not exceed it." ;
+  sh:targetClass cmpo:Lot ;
+  sh:property [ sh:path cmpo:lotSize ; sh:datatype xsd:integer ;
+                sh:minInclusive 1 ; sh:minCount 1 ;
+                sh:message "Q16a: lot must have a positive integer lot size." ] ;
+  sh:sparql [ sh:message "Q16b: more wafers linked to the lot than its declared size." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this WHERE {
+        $this cmpo:lotSize ?n .
+        { SELECT $this (COUNT(?w) AS ?c) WHERE { ?w cmpo:isPartOfLot $this } GROUP BY $this }
+        FILTER (?c > ?n)
+      }""" ] .
+
+inst:Question_18_Shape a sh:NodeShape ;
+  rdfs:label "Every edge exclusion width must be non-negative and smaller than half the wafer diameter." ;
+  sh:targetSubjectsOf cmpo:edgeExclusion ;
+  sh:sparql [ sh:message "Q18: edge exclusion negative or not smaller than half the wafer diameter." ;
+    sh:prefixes inst:ShapesGraph ;
+    sh:select """
+      SELECT $this ?value WHERE {
+        $this cmpo:edgeExclusion ?value .
+        OPTIONAL { $this cmpo:diameter ?d }
+        FILTER (?value < 0 || (BOUND(?d) && ?value >= ?d / 2))
+      }""" ] .
+
+inst:Question_19a_Shape a sh:NodeShape ;
+  rdfs:label "Groove depth must be non-negative." ;
+  sh:targetSubjectsOf cmpo:grooveDepth ;
+  sh:property [ sh:path cmpo:grooveDepth ; sh:minInclusive 0 ;
+                sh:message "Q19a: groove depth is negative." ] .
+
+inst:Question_19b_Shape a sh:NodeShape ;
+  rdfs:label "Groove width must be non-negative." ;
+  sh:targetSubjectsOf cmpo:grooveWidth ;
+  sh:property [ sh:path cmpo:grooveWidth ; sh:minInclusive 0 ;
+                sh:message "Q19b: groove width is negative." ] .
+
+inst:Question_19c_Shape a sh:NodeShape ;
+  rdfs:label "A pad that states a groove pattern must also state its pad type." ;
+  sh:targetSubjectsOf cmpo:hasGroovePattern ;
+  sh:property [ sh:path cmpo:padType ; sh:minCount 1 ;
+                sh:message "Q19c: pad states a groove pattern but no pad type." ] .

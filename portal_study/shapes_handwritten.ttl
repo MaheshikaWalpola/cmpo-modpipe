@@ -159,10 +159,10 @@ ggq:Q12_NonNegativeShape a sh:NodeShape ;
         $this sosa:observedProperty ?p ; sosa:hasSimpleResult ?value .
         FILTER (?value < 0)
         FILTER EXISTS {
-          VALUES ?family { cmpo:Pressure cmpo:Velocity cmpo:SlurryFlowRate
-                           cmpo:UsageParameter cmpo:MaterialRemovalRate
-                           cmpo:DresserUsage }
           ?p rdfs:subClassOf* ?family .
+          FILTER (?family IN (cmpo:Pressure, cmpo:Velocity, cmpo:SlurryFlowRate,
+                              cmpo:UsageParameter, cmpo:MaterialRemovalRate,
+                              cmpo:DresserUsage))
         }
       }""" ;
   ] .

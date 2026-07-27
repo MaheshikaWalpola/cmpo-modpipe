@@ -1,10 +1,13 @@
 # Graph-grounded 20-question suite as SPARQL audit queries — GraphDB version.
 # Paste each query into GraphDB Workbench (SPARQL view) on a repository that
-# contains BOTH kg_cmpo_v2.0.2.ttl AND cmpo-v2.0.2.ttl. Each query returns
+# contains BOTH kg/kg_cmpo_v2.1.ttl AND ontology/schema_v2.1.ttl. Each query returns
 # the VIOLATING nodes; an empty result means the statement holds.
 # Class membership uses rdf:type/rdfs:subClassOf* paths, so no inference
-# ruleset is required. Written 2026-07-24; executed counts for the released
-# KG are recorded in graph_grounded_results_2026-07-24.md.
+# ruleset is required. Note that if the repository ALSO materialises the type
+# closure, a node reaches its ancestor by several routes and the path yields
+# one solution per route; every query below therefore uses DISTINCT, so the
+# counts are the same with and without materialisation. Executed counts for the released
+# KG are recorded in RESULTS_handwritten_suite.md.
 #
 # Shared prefixes for every query:
 PREFIX sosa: <http://www.w3.org/ns/sosa/>
@@ -61,8 +64,8 @@ SELECT ?n ?t WHERE {
 } ;
 
 # ---- Q7a: wafer without exactly one identifier (found 0; includes wafer subclasses) ----
-SELECT ?n ?c WHERE {
-  { SELECT ?n (COUNT(?i) AS ?c) WHERE {
+SELECT DISTINCT ?n ?c WHERE {
+  { SELECT ?n (COUNT(DISTINCT ?i) AS ?c) WHERE {
       ?n rdf:type/rdfs:subClassOf* cmpo:Wafer . OPTIONAL { ?n cmpo:hasWaferId ?i }
     } GROUP BY ?n }
   FILTER (?c != 1)
@@ -79,7 +82,7 @@ SELECT ?n WHERE {
 } ;
 
 # ---- Q9: tool without tool identifier (found 3: syn_ellips_01, syn_profilo_01, syn_sem_01) ----
-SELECT ?n WHERE {
+SELECT DISTINCT ?n WHERE {
   ?n rdf:type/rdfs:subClassOf* cmpo:Tool .
   FILTER NOT EXISTS { ?n cmpo:toolId ?i }
 } ;
