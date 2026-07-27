@@ -1,0 +1,149 @@
+{
+  "note": "detection rates for the two error classes the released gate misses",
+  "pool": {
+    "non_negative_pressure_observations": 1259,
+    "of_which_exactly_zero": 422
+  },
+  "A_k_sweep": {
+    "widening": 0.5,
+    "points": [
+      {
+        "k": 50,
+        "T7": {
+          "seeded": 50,
+          "detected": 26,
+          "rate_pct": 52.0
+        },
+        "T5": {
+          "seeded": 100,
+          "detected": 25,
+          "rate_pct": 25.0
+        }
+      },
+      {
+        "k": 100,
+        "T7": {
+          "seeded": 100,
+          "detected": 55,
+          "rate_pct": 55.0
+        },
+        "T5": {
+          "seeded": 200,
+          "detected": 43,
+          "rate_pct": 21.5
+        }
+      },
+      {
+        "k": 200,
+        "T7": {
+          "seeded": 200,
+          "detected": 113,
+          "rate_pct": 56.5
+        },
+        "T5": {
+          "seeded": 400,
+          "detected": 81,
+          "rate_pct": 20.25
+        }
+      },
+      {
+        "k": 400,
+        "T7": {
+          "seeded": 400,
+          "detected": 221,
+          "rate_pct": 55.25
+        },
+        "T5": {
+          "seeded": 800,
+          "detected": 176,
+          "rate_pct": 22.0
+        }
+      },
+      {
+        "k": 600,
+        "T7": {
+          "seeded": 600,
+          "detected": 335,
+          "rate_pct": 55.83
+        },
+        "T5": {
+          "seeded": 1200,
+          "detected": 272,
+          "rate_pct": 22.67
+        }
+      }
+    ]
+  },
+  "B_widening_sweep": {
+    "k": 50,
+    "points": [
+      {
+        "widening": 0.0,
+        "clean_false_positives": 0,
+        "T7": {
+          "seeded": 50,
+          "detected": 30
+        },
+        "T5": {
+          "seeded": 100,
+          "detected": 28
+        }
+      },
+      {
+        "widening": 0.25,
+        "clean_false_positives": 0,
+        "T7": {
+          "seeded": 50,
+          "detected": 29
+        },
+        "T5": {
+          "seeded": 100,
+          "detected": 26
+        }
+      },
+      {
+        "widening": 0.5,
+        "clean_false_positives": 0,
+        "T7": {
+          "seeded": 50,
+          "detected": 26
+        },
+        "T5": {
+          "seeded": 100,
+          "detected": 25
+        }
+      },
+      {
+        "widening": 1.0,
+        "clean_false_positives": 0,
+        "T7": {
+          "seeded": 50,
+          "detected": 24
+        },
+        "T5": {
+          "seeded": 100,
+          "detected": 18
+        }
+      }
+    ]
+  },
+  "C_census": {
+    "widening": 0.5,
+    "pool": 1259,
+    "points": [
+      {
+        "class": "T7",
+        "seeded": 1259,
+        "detected": 692,
+        "rate_pct": 54.96
+      },
+      {
+        "class": "T5",
+        "seeded": 1258,
+        "detected": 267,
+        "rate_pct": 21.22
+      }
+    ]
+  },
+  "pythonhashseed": "0"
+}

@@ -1,0 +1,53 @@
+{
+  "protocol": "bounds widened to [min - 0.5*span, max + 0.5*span]; flagged counts on clean data are false positives",
+  "A_held_out_same_wafers": {
+    "bounds_from": 4000,
+    "bounds_properties": 34,
+    "evaluated": 21278,
+    "flagged": 11,
+    "unchecked_property_absent_from_training": 24,
+    "false_positive_rate_pct": 0.0517
+  },
+  "B_leave_one_wafer_out": {
+    "wafers": 4,
+    "pooled_evaluated": 25198,
+    "pooled_flagged": 2137,
+    "pooled_unchecked": 0,
+    "pooled_false_positive_rate_pct": 8.4808,
+    "per_wafer": [
+      {
+        "wafer": "wafer_-4224160592",
+        "trained_on": 18623,
+        "evaluated": 6575,
+        "flagged": 0,
+        "unchecked": 0,
+        "false_positive_rate_pct": 0.0
+      },
+      {
+        "wafer": "wafer_-4224160678",
+        "trained_on": 18433,
+        "evaluated": 6765,
+        "flagged": 1780,
+        "unchecked": 0,
+        "false_positive_rate_pct": 26.3119
+      },
+      {
+        "wafer": "wafer_-887170152",
+        "trained_on": 18680,
+        "evaluated": 6518,
+        "flagged": 356,
+        "unchecked": 0,
+        "false_positive_rate_pct": 5.4618
+      },
+      {
+        "wafer": "wafer_373446766",
+        "trained_on": 19858,
+        "evaluated": 5340,
+        "flagged": 1,
+        "unchecked": 0,
+        "false_positive_rate_pct": 0.0187
+      }
+    ]
+  },
+  "pythonhashseed": "0"
+}

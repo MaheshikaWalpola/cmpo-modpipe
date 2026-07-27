@@ -22,6 +22,42 @@ per-file status. None of this changes the tagged v2.0.2 artifact.
   confirmed exactly, sixteen statements pass non-vacuously.
 - Repository housekeeping: `.gitignore`, `evaluation/README.md`.
 
+## v2.1.2 — 2026-07-27 (artifact revision; version reported in the SemIIM 2026 paper)
+
+Artifact revision only. The ontology and the knowledge graph are byte-identical
+to v2.1 / v2.1.1; no term was added, removed or renamed, and no reported
+detection count changed.
+
+Evaluation:
+- Added `modpipe/range_rule_transfer.py` and `evaluation/range_rule_transfer.json`.
+  The R7 detection counts in `range_rule_results.json` are measured on the same
+  4,000-observation subgraph the bounds were derived from, so every uncorrupted
+  value lies inside them by construction. The new script measures the separate
+  question an adopter would ask: how often the same bounds fire on clean data
+  they were not derived from. Two conditions, both false-positive rates:
+  held-out observations of the same four wafers (11 of 21,278, 0.05%), and
+  leave-one-wafer-out (pooled 2,137 of 25,198, 8.5%; per wafer 0.0%, 0.02%,
+  5.5%, 26.3%). The paper reports both in Table 3.
+- Re-ran `modpipe/range_rule_experiment.py` at seed 42 with `PYTHONHASHSEED=0`
+  on the v2.1 pair. Output identical to the recorded run: T5 23 of 100, T7 25
+  of 50, all other rows unchanged. This confirms the paper's Table 3 against
+  the released harness rather than against a working copy.
+- Retitled the header of `range_rule_experiment.py`. It previously read
+  "camera-ready material only, not part of the submitted paper"; R7 is now
+  reported as Table 3 of the submitted paper, as an extension to the frozen
+  Table 2 taxonomy and never merged into Table 2's conditions.
+
+Note on the R7 denominators, recorded here because the paper now states them:
+20 of the 50 T7 seedings fell on values that were exactly zero, and the 6.895
+scale operator leaves a zero unchanged, so those 20 mutations produce a graph
+identical to the clean graph and no suite could detect them. Over the 30
+seedings that alter a value the bounds detect 25. On the T5 side the operator
+swaps values across the whole pressure family, so the 23 it catches are
+cross-property accidents rather than same-range swaps.
+
+Nothing else in the repository changed. The frozen tags `v2.0.2`, `v2.0.2.1`,
+`v2.1` and `v2.1.1` are unchanged; published tags are never rewritten.
+
 ## v2.1.1 — 2026-07-26 (artifact revision; ontology unchanged at v2.1)
 
 Competency-question repairs, so that the released harness matches the suite the

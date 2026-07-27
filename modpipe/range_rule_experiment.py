@@ -14,7 +14,9 @@ Protocol (frozen 2026-07-23 in hiwi_t7_range_experiment_protocol.md):
 5. pre-registered expectation: T7 flips to detected, T5 stays undetected,
    all other rows unchanged. Any deviation is a finding to report.
 
-Camera-ready material only. Not part of the submitted paper.
+Reported as Table 3 of the SemIIM 2026 paper, as an extension to the
+submitted taxonomy: R7 was designed after Table 2 was frozen and is never
+merged into Table 2's conditions.
 """
 import csv
 import importlib.util
