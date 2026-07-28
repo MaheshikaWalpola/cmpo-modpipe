@@ -66,6 +66,23 @@ Documentation:
   previously carried stale version strings and described their own contents as
   material outside the paper, which R7 no longer is: it is Table 3.
 
+Review-pass corrections (v2.2.1):
+- `kg/validation_report.json` added. The paper states that the released graph
+  ships as non-conforming with its validation report attached; the report was
+  written to an ignored output directory and never committed, so the claim did
+  not hold. The committed report reproduces the four E1 violations exactly
+  (three synthetic metrology tools without a tool identifier, one synthetic
+  metrology step without a stage label) over the 254,256-triple union.
+- `SHA256SUMS` extended from 28 to 39 entries. It now pins `legacy_audit/`,
+  which is the sole source of the E0 numbers the paper reports, and every
+  released script under `modpipe/`. Previously the manifest covered data
+  artifacts only, while the paper claims it pins everything reported.
+- `portal_study/README.md` said "no two runs lost the same ones". Runs 2 and 3
+  in fact dropped the same three statements (6, 13 and 18); only run 1 differs.
+  Corrected here and in the paper.
+- `CITATION.cff` carried the pre-review paper title and version 2.1.
+- Stale section pointer in `portal_study/README.md`.
+
 The frozen tags `v2.0.2`, `v2.0.2.1`, `v2.1`, `v2.1.1` and `v2.1.2` are
 unchanged. Published tags are never rewritten.
 

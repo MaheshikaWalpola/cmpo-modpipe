@@ -1,12 +1,12 @@
 # portal_study/ — what an LLM compiler does to a validation gate
 
-This folder holds the material for Section 5.4 (E4) of the SemIIM 2026 paper.
+This folder holds the material for Section 6.5 (E4) of the SemIIM 2026 paper.
 It answers one question: when twenty plain-English validation statements are
 compiled into SHACL by a language model, how many of them end up actually
 enforcing anything?
 
-The answer, measured three times on the same twenty statements, is between 11
-and 13 of 20 — and under a SHACL engine in advanced mode, twice it is zero,
+The answer, measured three times on the same twenty statements, is 11, 13 and
+13 of 20 — runs 2 and 3 agreeing, run 1 failing on a different set — and under a SHACL engine in advanced mode, twice it is zero,
 because a single malformed shape aborts the whole suite.
 
 ## Why an injection test and not `--metashacl`
@@ -65,8 +65,9 @@ means no shape was emitted for that statement at all.
 **Statements dropped in the merge.** The generator makes one model call per
 statement and merges the results by parsing each fragment into one graph. A
 fragment that does not parse is written to the server console and discarded;
-the merged suite simply does not contain it. Three to five statements
-disappeared this way per run, and no two runs lost the same ones. The web
+the merged suite simply does not contain it. Three or four statements
+disappeared this way per run: statements 15, 16, 18 and 19 in run 1, and
+statements 6, 13 and 18 in runs 2 and 3, which coincided. The web
 interface marks a statement green when the model call returns, not when its
 output parses, so the user sees twenty green ticks and receives sixteen or
 seventeen shapes.

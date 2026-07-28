@@ -16,7 +16,7 @@ co-located with ISWC 2026).
 | `synthetic/` | The synthetic completion table (observations and entities for CMPO classes that the PHM tool does not log, with per-class coverage declaration; identifiers are visibly synthetic) |
 | `modpipe/` | The pipeline (`modpipe.py`: ingestion, alignment, normalization, RDF generation) and the evaluation harness (`evaluate_v2.py`: gate run, seeded-error study, competency questions) |
 | `shapes/` | The two-tier validation gate: `shapes_core.ttl` (node-local core constraints) and `shapes_sparql.ttl` (graph-level semantic rules) |
-| `kg/` | The generated knowledge graph (252,873 triples; derived from the PHM 2016 test data plus the synthetic sample) |
+| `kg/` | The generated knowledge graph (252,873 triples) and its tier-1 validation report, so a consumer sees the four known findings rather than a bare conformance flag |
 | `evaluation/` | Raw results of the paper's experiments (`results_v2.json`), generation statistics, and source-data profile |
 | `legacy_audit/` | The E0 audit of an earlier deployment (runs against the [KGPortal](https://github.com/MaheshikaWalpola/KGPortal) repository at commit `0a79c0d`; see below) |
 | `portal_study/` | The E4 compilation study: twenty validation statements, three portal-generated SHACL suites, a corrected and a hand-written suite, and the injection-test harness that scores them |

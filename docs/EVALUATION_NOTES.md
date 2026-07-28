@@ -50,7 +50,7 @@ Counted on the union of the released graph and ontology (rdf:type resolved
 over rdfs:subClassOf*, the regime of the E1 gate run): the five tier-1
 shapes target 25,278 observations (CMPObservationShape), 7 wafers, 6
 polishing steps, 7 tools, and 7 chambers. Together the targeted classes
-hold 25,297 of the 25,388 typed instances in the graph (99.6%). The
+hold 25,305 of the 25,388 typed instances in the graph (99.6%). The
 aggregate figure is in the paper; these are the per-shape counts behind it.
 
 ## Continuous integration

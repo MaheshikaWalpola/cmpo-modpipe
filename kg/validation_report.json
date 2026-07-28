@@ -1,0 +1,36 @@
+{
+  "note": "Tier-1 SHACL validation of the released knowledge graph, in union with the ontology. Shipped with the graph so that a consumer sees the known findings rather than a bare conformance flag.",
+  "data_graph": "kg/kg_cmpo_v2.1.ttl",
+  "ontology": "ontology/schema_v2.1.ttl",
+  "shapes": "shapes/shapes_core.ttl",
+  "union_triples": 254256,
+  "engine": "pySHACL, inference=none, advanced=false",
+  "conforms": false,
+  "violation_count": 4,
+  "violations": [
+    {
+      "focusNode": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance#syn_ellips_01",
+      "resultPath": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#toolId",
+      "sourceConstraintComponent": "MinCountConstraintComponent",
+      "resultMessage": "Every tool has an identifier."
+    },
+    {
+      "focusNode": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance#syn_profilo_01",
+      "resultPath": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#toolId",
+      "sourceConstraintComponent": "MinCountConstraintComponent",
+      "resultMessage": "Every tool has an identifier."
+    },
+    {
+      "focusNode": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance#syn_sem_01",
+      "resultPath": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#toolId",
+      "sourceConstraintComponent": "MinCountConstraintComponent",
+      "resultMessage": "Every tool has an identifier."
+    },
+    {
+      "focusNode": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo/instance#syn_step_metrology_001",
+      "resultPath": "https://vsr.informatik.tu-chemnitz.de/ontologies/cmpo#stageLabel",
+      "sourceConstraintComponent": "MinCountConstraintComponent",
+      "resultMessage": "Every polishing step carries its stage label."
+    }
+  ]
+}
