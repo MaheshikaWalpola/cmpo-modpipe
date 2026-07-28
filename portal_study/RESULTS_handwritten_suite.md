@@ -1,13 +1,16 @@
 # The twenty statements against the released graph
 
 This note records what the twenty validation statements of `questions_20.md`
-report when they are compiled by hand rather than by the portal, and executed
-against the released artifacts: `kg/kg_cmpo_v2.1.ttl` and
+report when they are compiled into a reference suite (machine-drafted, then
+executed against the probe and corrected until every statement fired) rather
+than accepted from the portal unchecked, and executed against the released
+artifacts: `kg/kg_cmpo_v2.1.ttl` and
 `ontology/schema_v2.1.ttl`, 279,735 triples in union with the
 `rdfs:subClassOf` type closure materialised.
 
-It is the control condition for the compilation study in `README.md`. The
-statements are the same; only the compiler changes.
+It is the reference condition for the compilation study in `README.md`. The
+statements are the same; what changes is whether the resulting shapes were
+executed and corrected before being trusted.
 
 ## Freeze rule
 

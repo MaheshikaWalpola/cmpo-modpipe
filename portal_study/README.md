@@ -31,12 +31,12 @@ node that is correct and must not fire.
 | `runs/run2_portal_generated.ttl` | Portal output, run 2, verbatim |
 | `runs/run3_portal_generated.ttl` | Portal output, run 3, verbatim |
 | `shapes_corrected.ttl` | The same twenty statements after repair of the defects listed below |
-| `shapes_handwritten.ttl` | An independent hand-written suite for the same twenty statements, written without reference to the portal output |
+| `shapes_handwritten.ttl` | An independent reference suite for the same twenty statements, drafted without reference to the portal output. The filename is historical: like the portal's suites it was machine-drafted, and what distinguishes it is that it was executed against the probe and corrected until every statement fired |
 | `sparql_audit.rq` | The same twenty checks as standalone SPARQL, pasteable into GraphDB |
 | `probe20.ttl` | The injection probe |
 | `check_shapes.py` | The harness; reproduces every number below |
 | `results.json` | Its output |
-| `RESULTS_handwritten_suite.md` | Results of the hand-written suite against the released graph |
+| `RESULTS_handwritten_suite.md` | Results of that reference suite against the released graph |
 | `PROVENANCE.md` | Which repository and commit each artifact comes from |
 
 ## Reproducing
@@ -53,12 +53,20 @@ python3 portal_study/check_shapes.py
 | Portal run 1 | 16 | 11 / 20 | 11 / 20 | 5, 6, 7, 13, 14 | 15, 16, 18, 19 | 1 |
 | Portal run 2 | 17 | 13 / 20 | suite rejected | 7, 14, 15, 16 | 6, 13, 18 | 1 |
 | Portal run 3 | 17 | 13 / 20 | suite rejected | 7, 14, 15, 16 | 6, 13, 18 | 1 |
-| Corrected | 22 | 20 / 20 | 20 / 20 | — | — | 0 |
-| Hand-written | 23 | 20 / 20 | 20 / 20 | — | — | 0 |
+| Repaired, execution-checked | 22 | 20 / 20 | 20 / 20 | — | — | 0 |
+| Independent, execution-checked | 23 | 20 / 20 | 20 / 20 | — | — | 0 |
 
 *Enforced* means the shape written for a statement fired on that statement's
 own probe node. *Inert* means a shape exists but fired on nothing. *Absent*
 means no shape was emitted for that statement at all.
+
+**All five suites were machine-drafted.** The last two are not a human control:
+they were produced with AI assistance under author supervision, then run
+against `probe20.ttl` and corrected until all twenty statements fired. What
+separates them from the three portal runs is that execution check, not their
+authorship. The twenty English statements are a different matter — those were
+reviewed and corrected by a CMP process engineer and a student assistant, and
+neither reviewer saw any generated SHACL or the probe.
 
 ## The defects, and why each one is invisible
 

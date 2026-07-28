@@ -19,7 +19,7 @@ co-located with ISWC 2026).
 | `kg/` | The generated knowledge graph (252,873 triples) and its tier-1 validation report, so a consumer sees the four known findings rather than a bare conformance flag |
 | `evaluation/` | Raw results of the paper's experiments (`results_v2.json`), generation statistics, and source-data profile |
 | `legacy_audit/` | The E0 audit of an earlier deployment (runs against the [KGPortal](https://github.com/MaheshikaWalpola/KGPortal) repository at commit `0a79c0d`; see below) |
-| `portal_study/` | The E4 compilation study: twenty validation statements, three portal-generated SHACL suites, a corrected and a hand-written suite, and the injection-test harness that scores them |
+| `portal_study/` | The E4 compilation study: twenty validation statements, three portal-generated SHACL suites, two execution-checked reference suites, and the injection-test harness that scores them |
 | `data/` | Empty by design; place the PHM 2016 CSVs here (see next section) |
 | `docs/` | Notes on data scope (`DATA_SUFFICIENCY.md`) and on reading the evaluation scripts and results (`EVALUATION_NOTES.md`) |
 

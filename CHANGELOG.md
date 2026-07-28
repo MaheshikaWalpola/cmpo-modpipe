@@ -20,7 +20,8 @@ Added — `portal_study/`, the E4 compilation study:
 - `runs/run1..run3_portal_generated.ttl`: three portal-generated SHACL suites
   for those same twenty statements, verbatim.
 - `shapes_corrected.ttl` and `shapes_handwritten.ttl`: the same statements
-  after repair, and an independently hand-written suite.
+  after repair, and an independently drafted reference suite (see the
+  authorship correction below).
 - `probe20.ttl` and `check_shapes.py`: an injection test that carries one
   deliberate violation per statement and reports, per suite, which statements
   actually enforce. The portal runs score 11, 13 and 13 of 20; two of the three
@@ -82,6 +83,23 @@ Review-pass corrections (v2.2.1):
   Corrected here and in the paper.
 - `CITATION.cff` carried the pre-review paper title and version 2.1.
 - Stale section pointer in `portal_study/README.md`.
+
+Authorship correction (v2.2.2):
+- The two reference suites were described throughout as "hand-written" and
+  "repaired by hand", which implied a human control condition against
+  machine-generated shapes. They were not: like the portal's suites they were
+  machine-drafted, with AI assistance under author supervision, and what
+  distinguishes them is that they were executed against `probe20.ttl` and
+  corrected until all twenty statements fired. Table 3 of the paper and every
+  description here now say so. The filenames `shapes_handwritten.ttl` and
+  `RESULTS_handwritten_suite.md` are kept because a published tag pins them,
+  and are noted as historical.
+- The twenty English statements are a separate matter and the human review
+  there is real: the portal's rule suggester produced them, and a CMP process
+  engineer and a student assistant reviewed and lightly corrected them before
+  any compilation. Neither reviewer saw the generated SHACL or the probe. This
+  is now stated in `questions_20.md` and in the paper's method rather than only
+  in the acknowledgements.
 
 The frozen tags `v2.0.2`, `v2.0.2.1`, `v2.1`, `v2.1.1` and `v2.1.2` are
 unchanged. Published tags are never rewritten.

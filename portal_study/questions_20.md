@@ -1,10 +1,10 @@
 # Graph-grounded validation questions, v1.0 (2026-07-23)
 
-Twenty one-line validation statements in the portal wizard's style. Unlike
-the curated domain suite, every statement here was checked against the
-released graph BEFORE writing: each targeted class
-has instances and each constrained property occurs in the data, so no
-statement can be vacuous. Occurrence counts are from a predicate inventory
+Twenty one-line validation statements produced by the portal's rule
+suggester, then reviewed by a CMP process engineer and a student assistant,
+who lightly corrected several wordings. Every statement was afterwards checked
+against the released graph: each targeted class has instances and each
+constrained property occurs in the data, so no statement can be vacuous. Occurrence counts are from a predicate inventory
 of the released graph.
 
 Predictions are written down BEFORE any run (freeze rule). Compare your
@@ -77,9 +77,10 @@ against the CMPO v2.0.2 instance file, export the report. Differences
 between the report and the predictions then mix data effects with
 compilation effects; keep the generated SHACL for the comparison study.
 
-Option B (tests only the data): hand-written SHACL for these statements,
-validated with pySHACL or GraphDB against the released KG plus ontology.
-Clean separation; ask Claude for the ready-made shapes file.
+Option B (tests only the data): a reference SHACL suite for these statements,
+drafted with AI assistance under author supervision and then executed against
+the probe and corrected until every statement fired, validated with pySHACL or
+GraphDB against the released KG plus ontology.
 
-Results for both options are in `RESULTS_handwritten_suite.md` (hand-written
+Results for both options are in `RESULTS_handwritten_suite.md` (the reference
 suite against the released graph) and `README.md` (portal compilation study).
