@@ -28,7 +28,7 @@
           "loads": true,
           "conforms": false,
           "results": 20,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -41,7 +41,12 @@
             17,
             20
           ],
-          "enforced_count": 11,
+          "triggered_count": 11,
+          "nondiscriminative": [
+            2,
+            12
+          ],
+          "discriminative_count": 9,
           "inert": [
             5,
             6,
@@ -64,7 +69,7 @@
           "loads": true,
           "conforms": false,
           "results": 20,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -77,7 +82,12 @@
             17,
             20
           ],
-          "enforced_count": 11,
+          "triggered_count": 11,
+          "nondiscriminative": [
+            2,
+            12
+          ],
+          "discriminative_count": 9,
           "inert": [
             5,
             6,
@@ -130,7 +140,7 @@
           "loads": true,
           "conforms": false,
           "results": 21,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -145,7 +155,12 @@
             19,
             20
           ],
-          "enforced_count": 13,
+          "triggered_count": 13,
+          "nondiscriminative": [
+            2,
+            12
+          ],
+          "discriminative_count": 11,
           "inert": [
             7,
             14,
@@ -196,7 +211,7 @@
           "loads": true,
           "conforms": false,
           "results": 21,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -211,7 +226,12 @@
             19,
             20
           ],
-          "enforced_count": 13,
+          "triggered_count": 13,
+          "nondiscriminative": [
+            2,
+            12
+          ],
+          "discriminative_count": 11,
           "inert": [
             7,
             14,
@@ -260,7 +280,7 @@
           "loads": true,
           "conforms": false,
           "results": 24,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -282,7 +302,9 @@
             19,
             20
           ],
-          "enforced_count": 20,
+          "triggered_count": 20,
+          "nondiscriminative": [],
+          "discriminative_count": 20,
           "inert": [],
           "absent": [],
           "false_positive_control_nodes": []
@@ -292,7 +314,7 @@
           "loads": true,
           "conforms": false,
           "results": 24,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -314,7 +336,9 @@
             19,
             20
           ],
-          "enforced_count": 20,
+          "triggered_count": 20,
+          "nondiscriminative": [],
+          "discriminative_count": 20,
           "inert": [],
           "absent": [],
           "false_positive_control_nodes": []
@@ -352,7 +376,7 @@
           "loads": true,
           "conforms": false,
           "results": 24,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -374,7 +398,9 @@
             19,
             20
           ],
-          "enforced_count": 20,
+          "triggered_count": 20,
+          "nondiscriminative": [],
+          "discriminative_count": 20,
           "inert": [],
           "absent": [],
           "false_positive_control_nodes": []
@@ -384,7 +410,7 @@
           "loads": true,
           "conforms": false,
           "results": 24,
-          "enforced": [
+          "triggered": [
             1,
             2,
             3,
@@ -406,7 +432,9 @@
             19,
             20
           ],
-          "enforced_count": 20,
+          "triggered_count": 20,
+          "nondiscriminative": [],
+          "discriminative_count": 20,
           "inert": [],
           "absent": [],
           "false_positive_control_nodes": []

@@ -14,7 +14,10 @@ This script does that for the twenty validation statements in
 statement, plus control nodes that must NOT fire. For each suite it reports:
 
   - loads          : whether the engine accepts the shapes graph at all
-  - enforced       : statements whose own shape fired on their own probe node
+  - triggered      : statements whose own shape fired on their own probe node
+  - discriminative : triggered statements whose shape does NOT also fire on the
+                     correct control node. A shape that fires on everything is
+                     triggered but separates nothing, so this is the honest count
   - inert          : statements whose shape is present but fired on nothing
   - absent         : statements with no shape in the suite
   - false positives: control nodes that fired although they are correct
@@ -170,6 +173,7 @@ def run_suite(name, rel, data):
 
         fired = {}          # statement number -> True if its own shape fired
         false_positives = []
+        fired_on_control = []   # statements whose shape also fires on correct data
         for r in rg.subjects(RDF.type, SH.ValidationResult):
             focus = str(rg.value(r, SH.focusNode) or "")
             local = focus.rsplit("#", 1)[-1].rsplit("/", 1)[-1]
@@ -177,6 +181,9 @@ def run_suite(name, rel, data):
             node_shape = owner.get(src, src)
             if local in CONTROLS:
                 false_positives.append(local)
+                owner_stmt = shape_statement(shapes, owner.get(src, src))
+                if owner_stmt is not None:
+                    fired_on_control.append(owner_stmt)
                 continue
             stmt = PROBE_MAP.get(local)
             if stmt is None:
@@ -198,12 +205,18 @@ def run_suite(name, rel, data):
 
         enforced = sorted(fired)
         present = set(out["statements_with_a_shape"])
+        # A statement that fires on its own probe AND on the control separates
+        # nothing: it is triggered but not discriminative. Report both, because
+        # the difference is the honest headline.
+        nondisc = sorted(set(fired_on_control))
         mode.update(
             loads=True,
             conforms=conforms,
             results=len(list(rg.subjects(RDF.type, SH.ValidationResult))),
-            enforced=enforced,
-            enforced_count=len(enforced),
+            triggered=enforced,
+            triggered_count=len(enforced),
+            nondiscriminative=nondisc,
+            discriminative_count=len([s for s in enforced if s not in nondisc]),
             inert=sorted(present - set(enforced)),
             absent=sorted(set(range(1, 21)) - present),
             false_positive_control_nodes=sorted(set(false_positives)),
@@ -228,7 +241,9 @@ def main():
             if not m.get("loads"):
                 print(f"   {key}: SHAPES GRAPH REJECTED - {m['error'][:90]}")
                 continue
-            print(f"   {key}: enforced {m['enforced_count']}/20 "
+            print(f"   {key}: triggered {m['triggered_count']}/20, "
+                  f"discriminative {m['discriminative_count']}/20 "
+                  f"| non-disc {m['nondiscriminative']} "
                   f"| inert {m['inert']} | absent {m['absent']}"
                   + (f" | FALSE POSITIVES {m['false_positive_control_nodes']}"
                      if m["false_positive_control_nodes"] else ""))

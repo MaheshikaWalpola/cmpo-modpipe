@@ -101,6 +101,19 @@ Authorship correction (v2.2.2):
   is now stated in `questions_20.md` and in the paper's method rather than only
   in the acknowledgements.
 
+Metric correction (v2.2.3):
+- `check_shapes.py` now separates *triggered* from *discriminative*. A shape
+  that fires on its own probe node and also on the correct control node is
+  triggered but separates nothing. Statements 2 and 12 do exactly that in every
+  generated run: statement 2 compiles to `sh:class cmpo:CMPParameter`, which
+  fails on every observation because parameter classes are never asserted as
+  instances of it, and statement 12 constrains every `cmpo:CMPObservation`
+  rather than the dimensioned families. Counting them as enforced overstated the
+  result. The generated suites trigger 11, 13 and 13 of 20 but discriminate for
+  only 9, 11 and 11. Both execution-checked suites discriminate for all twenty.
+  The paper reports both numbers; this folder's README and results.json now do
+  too.
+
 The frozen tags `v2.0.2`, `v2.0.2.1`, `v2.1`, `v2.1.1` and `v2.1.2` are
 unchanged. Published tags are never rewritten.
 

@@ -5,9 +5,12 @@ It answers one question: when twenty plain-English validation statements are
 compiled into SHACL by a language model, how many of them end up actually
 enforcing anything?
 
-The answer, measured three times on the same twenty statements, is 11, 13 and
-13 of 20 — runs 2 and 3 agreeing, run 1 failing on a different set — and under a SHACL engine in advanced mode, twice it is zero,
-because a single malformed shape aborts the whole suite.
+The answer, measured three times on the same twenty statements: the suites
+trigger the intended check for 11, 13 and 13 of 20, but discriminate correct
+from incorrect data for only 9, 11 and 11, because two shapes also fire on
+correct data. Runs 2 and 3 agree; run 1 fails on a different set. Under a SHACL
+engine in advanced mode, twice the answer is zero, because a single malformed
+shape aborts the whole suite.
 
 ## Why an injection test and not `--metashacl`
 
@@ -56,9 +59,11 @@ python3 portal_study/check_shapes.py
 | Repaired, execution-checked | 22 | 20 / 20 | 20 / 20 | — | — | 0 |
 | Independent, execution-checked | 23 | 20 / 20 | 20 / 20 | — | — | 0 |
 
-*Enforced* means the shape written for a statement fired on that statement's
-own probe node. *Inert* means a shape exists but fired on nothing. *Absent*
-means no shape was emitted for that statement at all.
+*Triggered* means the shape written for a statement fired on that statement's
+own probe node. *Discriminative* subtracts the statements whose shape also
+fires on the correct control node — statements 2 and 12 in every run — because a
+shape that fires on everything separates nothing. *Inert* means a shape exists
+but fired on nothing. *Absent* means no shape was emitted at all.
 
 **All five suites were machine-drafted.** The last two are not a human control:
 they were produced with AI assistance under author supervision, then run
